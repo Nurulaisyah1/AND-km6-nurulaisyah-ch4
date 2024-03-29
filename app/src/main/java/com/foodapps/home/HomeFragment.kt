@@ -64,6 +64,9 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         bindCategoryList(viewModel.getCategories())
         bindMenuList(viewModel.getMenus())
+
+        // Clear cart when returning to home
+        clearCart()
     }
 
     private fun bindCategoryList(data: List<Category>) {
@@ -97,12 +100,16 @@ class HomeFragment : Fragment() {
         // Menambahkan item baru ke daftar
         itemList.add(item)
 
-        // Menyimpan daftar item yang diperbarui ke SharedPreferences
         val updatedJson = Gson().toJson(itemList)
         editor.putString("cart_items", updatedJson)
         editor.apply()
 
         // Tampilkan pesan bahwa item telah ditambahkan ke keranjang
-        Toast.makeText(requireContext(), "Item ditambahkan ke keranjang", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), "add tocart succes", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun clearCart() {
+        val sharedPreferences = requireActivity().getSharedPreferences("Cart", Context.MODE_PRIVATE)
+        sharedPreferences.edit().clear().apply()
     }
 }

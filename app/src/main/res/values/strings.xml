@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">FoodApps</string>
-    <string name="title_tab_home">title_tab_home</string>
-    <string name="title_tab_cart">title_tab_cart</string>
-    <string name="title_tab_profile">title_tab_profile</string>
-    <string name="text_btn_add_to_cart">text_btn_add_to_cart</string>
-    <string name="you_might_looking_for">you_might_looking_for</string>
+    <string name="title_tab_home">home</string>
+    <string name="title_tab_cart">cart</string>
+    <string name="title_tab_profile">profile</string>
+    <string name="text_btn_add_to_cart">add to cart</string>
+    <string name="you_might_looking_for">for you</string>
     <string name="hint_name">Name\n</string>
     <string name="text_name">Nurul Aisyah\n</string>
     <string name="text_hint_username">Username</string>
@@ -37,4 +37,5 @@
     <string name="text_title_order_confirmation">order confirmation</string>
     <string name="text_cart_is_empty">cart is empty\n</string>
     <string name="text_banner">welcome Food Apps!</string>
+    <string name="txt_for_you">For You</string>
 </resources>

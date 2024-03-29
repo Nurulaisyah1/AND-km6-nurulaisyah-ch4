@@ -38,7 +38,7 @@
             android:id="@+id/btn_add_to_cart"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="64dp"
             android:drawableStart="@drawable/ic_basket"
             android:text="@string/add_to_cart"
             app:layout_constraintEnd_toEndOf="parent"

@@ -1,25 +1,28 @@
 package com.foodapps.presentation.checkout
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.foodapps.databinding.ActivityCheckoutBinding
+import com.foodapps.presentation.common.adapter.CartListAdapter
+import com.foodapps.presentation.checkout.adapter.PriceListAdapter
+import com.foodapps.utils.GenericViewModelFactory
+import com.foodapps.utils.proceedWhen
+import com.foodapps.utils.toDollarFormat
+import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import androidx.appcompat.app.AlertDialog
 import com.foodapps.R
 import com.foodapps.data.datasource.cart.CartDataSource
 import com.foodapps.data.datasource.cart.CartDatabaseDataSource
 import com.foodapps.data.local.database.AppDatabase
 import com.foodapps.data.repository.CartRepository
 import com.foodapps.data.repository.CartRepositoryImpl
-import com.foodapps.databinding.ActivityCheckoutBinding
-import com.foodapps.presentation.checkout.adapter.PriceListAdapter
-import com.foodapps.presentation.common.adapter.CartListAdapter
-import com.foodapps.utils.GenericViewModelFactory
-import com.foodapps.utils.proceedWhen
-import com.foodapps.utils.toDollarFormat
+import com.foodapps.presentation.DetailMenuActivity
+import com.foodapps.presentation.home.adapter.MenuListAdapter
 
 class CheckoutActivity : AppCompatActivity() {
 
