@@ -1,8 +1,7 @@
 package com.foodapps.data.datasource.category
 
-import com.foodapps.data.model.Category
+import com.foodapps.data.network.model.category.CategoriesResponse
 
 interface CategoryDataSource {
-
-    fun getCategories(): List<Category>
+    suspend fun getCategories(): CategoriesResponse
 }

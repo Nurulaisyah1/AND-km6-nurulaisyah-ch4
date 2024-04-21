@@ -4,60 +4,62 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="16dp">
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp"
+    app:cardUseCompatPadding="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp">
+        android:padding="8dp">
 
+        <!-- ImageView untuk gambar menu -->
         <ImageView
-            android:id="@+id/iv_menu_image"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:id="@+id/imageViewMenu"
+            android:layout_width="0dp"
+            android:layout_height="240dp"
             android:scaleType="centerCrop"
-            app:layout_constraintDimensionRatio="H,2:1.4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@tools:sample/avatars" />
 
+        <!-- TextView untuk teks nama menu -->
         <TextView
-            android:id="@+id/tv_menu_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@id/iv_menu_image"
-            tools:text="Banana" />
-
-        <Button
-            android:id="@+id/btn_add_to_cart"
-            android:layout_width="match_parent"
+            android:id="@+id/Tv_MenuName"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:drawableStart="@drawable/ic_basket"
-            android:text="@string/add_to_cart"
+            android:text="@string/txt_name_menu"
+            android:textSize="24sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_menu_name" />
+            app:layout_constraintTop_toBottomOf="@id/imageViewMenu" />
 
+        <!-- TextView untuk teks harga menu -->
         <TextView
-            android:id="@+id/tv_menu_price"
-            android:layout_width="match_parent"
+            android:id="@+id/Tv_MenuPrice"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/txt_price_menu"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/Tv_MenuName" />
+
+        <!-- Tombol "Add to Cart" -->
+        <Button
+            android:id="@+id/btnAddToCart1"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textSize="14sp"
-            android:textStyle="bold"
+            android:text="@string/txt_add_to_cart"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_add_to_cart"
-            tools:text="IDR. 20.000" />
+            app:layout_constraintTop_toBottomOf="@id/Tv_MenuPrice" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.cardview.widget.CardView>

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -35,7 +36,7 @@
         app:layout_constraintEnd_toStartOf="@id/ll_counter_menu"
         app:layout_constraintStart_toEndOf="@id/iv_menu_image"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Ayam Goreng" />
+        tools:text="seblak" />
 
     <TextView
         android:id="@+id/tv_menu_price"
@@ -48,7 +49,7 @@
         app:layout_constraintEnd_toStartOf="@+id/ll_counter_menu"
         app:layout_constraintStart_toEndOf="@+id/iv_menu_image"
         app:layout_constraintTop_toBottomOf="@id/tv_menu_name"
-        tools:text="IDR. 25.000" />
+        tools:text="IDR. 20.000" />
 
     <LinearLayout
         android:id="@+id/ll_counter_menu"
@@ -91,12 +92,12 @@
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/et_notes_item"
-        style="@style/Widget.Material3.TextInputEditText.FilledBox"
+        style="@style/ThemeOverlay.Material3.TextInputEditText.FilledBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:background="@drawable/bg_button_rounded_border_transparent"
-        android:hint="text_hint_notes"
+        android:hint="@string/text_hint_notes"
         android:imeOptions="actionDone"
         android:inputType="text"
         android:maxLines="3"
@@ -105,5 +106,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/iv_menu_image"
         app:layout_constraintTop_toBottomOf="@id/iv_menu_image"
-        tools:text="tidak pedas" />
+        tools:text="pedas" />
 </androidx.constraintlayout.widget.ConstraintLayout>

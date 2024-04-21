@@ -1,4 +1,3 @@
-
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
@@ -41,9 +40,26 @@ android {
         viewBinding = true
     }
     buildFeatures {
-        dataBinding= true
+        dataBinding = true
+        buildConfig = true
     }
-
+    flavorDimensions += "env"
+    productFlavors {
+        create("production") {
+            buildConfigField(
+                type = "String",
+                name = "BASE_URL",
+                value = "\"https://api-restaurant.binaracademy.org/\""
+            )
+        }
+        create("integration") {
+            buildConfigField(
+                type = "String",
+                name = "BASE_URL",
+                value = "\"https://api-restaurant.binaracademy.org/\""
+            )
+        }
+    }
 }
 
 dependencies {
@@ -61,13 +77,25 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.room.ktx)
-    implementation(libs.firebase.crashlytics.buildtools)
+    implementation(libs.firebase.crashlytics.ktx)
     ksp(libs.room.compiler)
     implementation(libs.coroutine.core)
     implementation(libs.coroutine.android)
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.gson)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     implementation("com.google.code.gson:gson:2.8.8")
+    implementation ("com.google.firebase:firebase-auth-ktx:21.0.1")
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.4.0")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0")
+
+
+
+
+
+
 
 }

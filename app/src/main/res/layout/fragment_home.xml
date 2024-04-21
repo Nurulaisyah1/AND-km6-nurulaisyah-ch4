@@ -7,6 +7,7 @@
     android:layout_margin="16dp"
     tools:context=".presentation.home.HomeFragment">
 
+    <!-- Header -->
     <include
         android:id="@+id/layout_header"
         layout="@layout/layout_header_home"
@@ -14,39 +15,76 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- Fitur Pencarian -->
+    <EditText
+        android:id="@+id/et_search"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Search"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/iv_seacrh"
+        app:layout_constraintTop_toBottomOf="@id/layout_header" />
+
+    <!-- image view pencarian-->
+    <ImageView
+        android:id="@+id/iv_seacrh"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_search"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/et_search" />
+
+
+
+    <!-- Kategori -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_category"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:clipToPadding="true"
+        android:nestedScrollingEnabled="true"
+        android:orientation="horizontal"
+        android:visibility="visible"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_seacrh"
+        tools:listitem="@layout/item_category_menu" />
+    <!-- NestedScrollView -->
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout_header">
+        app:layout_constraintTop_toBottomOf="@id/rv_category">
 
+        <!-- Konten dalam NestedScrollView -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_category"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clipToPadding="true"
-                android:nestedScrollingEnabled="true"
-                android:orientation="horizontal"
-                android:visibility="visible"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:listitem="@layout/item_category_menu" />
 
             <TextView
                 android:id="@+id/tv_title_section_product"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/you_might_looking_for"
+                android:text="@string/menu"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@+id/rv_category" />
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:background="@color/white"
+                android:contentDescription="Button Menu"
+                android:src="@drawable/ic_more"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_menu_list"
+                android:id="@+id/rv_product_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -54,8 +92,11 @@
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_title_section_product"
+                app:layout_constraintVertical_bias="0.0"
                 app:spanCount="2"
+                tools:layout_editor_absoluteX="-152dp"
                 tools:listitem="@layout/item_menu" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 

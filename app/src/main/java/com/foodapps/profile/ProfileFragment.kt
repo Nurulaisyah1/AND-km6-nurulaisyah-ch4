@@ -1,5 +1,6 @@
 package com.foodapps.profile
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,12 +11,11 @@ import coil.load
 import coil.transform.CircleCropTransformation
 import com.foodapps.R
 import com.foodapps.databinding.FragmentProfileBinding
-
+import com.foodapps.presentation.login.LoginActivity
 
 class ProfileFragment : Fragment() {
 
     private lateinit var binding: FragmentProfileBinding
-
     private val viewModel: ProfileViewModel by viewModels()
 
     override fun onCreateView(
@@ -51,6 +51,9 @@ class ProfileFragment : Fragment() {
         binding.btnEdit.setOnClickListener {
             viewModel.changeEditMode()
         }
+        binding.btnLogout.setOnClickListener {
+            logout() // Panggil fungsi logout saat tombol logout ditekan
+        }
     }
 
     private fun observeEditMode() {
@@ -59,5 +62,15 @@ class ProfileFragment : Fragment() {
             binding.nameEditText.isEnabled = it
             binding.usernameEditText.isEnabled = it
         }
+    }
+
+    private fun logout() {
+        // Implementasi proses logout di sini
+        // Misalnya, hapus token autentikasi atau sesi pengguna
+        // Kemudian, arahkan pengguna kembali ke halaman login
+        val intent = Intent(requireContext(), LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(intent)
+        requireActivity().finish()
     }
 }
