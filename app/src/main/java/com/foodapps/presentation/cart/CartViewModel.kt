@@ -1,37 +1,73 @@
 package com.foodapps.presentation.cart
-import android.util.Log
+
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
 import com.foodapps.data.model.Cart
 import com.foodapps.data.repository.CartRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
-
+import com.foodapps.utils.ResultWrapper
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
+import java.lang.Exception
 
 class CartViewModel(private val cartRepository: CartRepository) : ViewModel() {
-    fun getAllCarts() = cartRepository.getUserCartData().asLiveData(Dispatchers.IO)
-    fun decreaseCart(item: Cart) {
-        viewModelScope.launch(Dispatchers.IO) {
-            cartRepository.decreaseCart(item).collect()
-        }
-    }
-    fun increaseCart(item: Cart) {
-        viewModelScope.launch(Dispatchers.IO) {
-            cartRepository.increaseCart(item).collect()
-        }
-    }
-    fun removeCart(item: Cart) {
-        viewModelScope.launch(Dispatchers.IO) {
-            cartRepository.deleteCart(item).collect()
-        }
-    }
-    fun setCartNotes(item: Cart) {
-        viewModelScope.launch(Dispatchers.IO) {
-            cartRepository.setCartNotes(item).collect{
-                Log.d("Set Notes", "setCartNotes: $it")
+
+    fun getAllCarts(): Flow<ResultWrapper<List<Cart>>> {
+        return cartRepository.getAllCarts().map { carts ->
+            if (carts.isNotEmpty()) {
+                ResultWrapper.Success(carts)
+            } else {
+                ResultWrapper.Empty()
             }
+        }.catch { e ->
+            emit(ResultWrapper.Error(exception = Exception(e)))
+        }.onStart {
+            emit(ResultWrapper.Loading())
         }
+    }
+
+    fun decreaseCart(item: Cart): Flow<ResultWrapper<Unit>> {
+        return flow {
+            emit(ResultWrapper.Loading())
+            cartRepository.decreaseCart(item)
+            emit(ResultWrapper.Success(Unit))
+        }.catch { e ->
+            emit(ResultWrapper.Error(exception = Exception(e)))
+        }
+    }
+
+    fun increaseCart(item: Cart): Flow<ResultWrapper<Unit>> {
+        return flow {
+            emit(ResultWrapper.Loading())
+            cartRepository.increaseCart(item)
+            emit(ResultWrapper.Success(Unit))
+        }.catch { e ->
+            emit(ResultWrapper.Error(exception = Exception(e)))
+        }
+    }
+
+    fun removeCart(item: Cart): Flow<ResultWrapper<Unit>> {
+        return flow {
+            emit(ResultWrapper.Loading())
+            cartRepository.deleteCart(item)
+            emit(ResultWrapper.Success(Unit))
+        }.catch { e ->
+            emit(ResultWrapper.Error(exception = Exception(e)))
+        }
+    }
+
+    fun setCartNotes(item: Cart): Flow<ResultWrapper<Unit>> {
+        return flow {
+            emit(ResultWrapper.Loading())
+            cartRepository.setCartNotes(item)
+            emit(ResultWrapper.Success(Unit))
+        }.catch { e ->
+            emit(ResultWrapper.Error(exception = Exception(e)))
+        }
+    }
+
+    fun isUserLoggedIn(): Boolean {
+        return true // Placeholder implementation
     }
 }

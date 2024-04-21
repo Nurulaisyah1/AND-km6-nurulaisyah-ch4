@@ -1,135 +1,65 @@
 package com.foodapps.presentation.checkout
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import com.foodapps.data.repository.CartRepositoryImpl
 import com.foodapps.databinding.ActivityCheckoutBinding
-import com.foodapps.presentation.common.adapter.CartListAdapter
-import com.foodapps.presentation.checkout.adapter.PriceListAdapter
 import com.foodapps.utils.GenericViewModelFactory
 import com.foodapps.utils.proceedWhen
-import com.foodapps.utils.toDollarFormat
-import androidx.activity.viewModels
-import androidx.core.view.isVisible
-import androidx.fragment.app.viewModels
-import com.foodapps.R
-import com.foodapps.data.datasource.cart.CartDataSource
-import com.foodapps.data.datasource.cart.CartDatabaseDataSource
-import com.foodapps.data.local.database.AppDatabase
-import com.foodapps.data.repository.CartRepository
-import com.foodapps.data.repository.CartRepositoryImpl
-import com.foodapps.presentation.DetailMenuActivity
-import com.foodapps.presentation.home.adapter.MenuListAdapter
 
 class CheckoutActivity : AppCompatActivity() {
 
-    private val binding: ActivityCheckoutBinding by lazy {
-        ActivityCheckoutBinding.inflate(layoutInflater)
-    }
-
+    private lateinit var binding: ActivityCheckoutBinding
     private val viewModel: CheckoutViewModel by viewModels {
-        val db = AppDatabase.getInstance(this)
-        val ds: CartDataSource = CartDatabaseDataSource(db.cartDao())
-        val rp: CartRepository = CartRepositoryImpl(ds)
-        GenericViewModelFactory.create(CheckoutViewModel(rp))
-    }
-
-    private val adapter: CartListAdapter by lazy {
-        CartListAdapter()
-    }
-    private val priceItemAdapter: PriceListAdapter by lazy {
-        PriceListAdapter {
-
-        }
+        val cartRepository = CartRepositoryImpl()
+        GenericViewModelFactory.create(CheckoutViewModel(cartRepository))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityCheckoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setupList()
+
+        setupViews()
         observeData()
-        setClickListeners()
     }
 
-    private fun setClickListeners() {
-        binding.ivBack.setOnClickListener {
-            onBackPressed()
-        }
-
+    private fun setupViews() {
         binding.btnCheckout.setOnClickListener {
             showCheckoutDialog()
         }
     }
 
-    private fun setupList() {
-        binding.layoutContent.rvCart.adapter = adapter
-        binding.layoutContent.rvShoppingSummary.adapter = priceItemAdapter
-    }
-
     private fun observeData() {
-        viewModel.checkoutData.observe(this) { result ->
-            result.proceedWhen(doOnSuccess = {
-                binding.layoutState.root.isVisible = false
-                binding.layoutState.pbLoading.isVisible = false
-                binding.layoutState.tvError.isVisible = false
-                binding.layoutContent.root.isVisible = true
-                binding.layoutContent.rvCart.isVisible = true
-                binding.cvSectionOrder.isVisible = true
-                result.payload?.let { (carts, priceItems, totalPrice) ->
-                    adapter.submitData(carts)
-                    binding.tvTotalPrice.text = totalPrice.toDollarFormat()
-                    priceItemAdapter.submitData(priceItems)
+        viewModel.checkoutResult.observe(this, Observer { result ->
+            result.proceedWhen(
+                doOnSuccess = {
+                    Toast.makeText(this, "Checkout berhasil", Toast.LENGTH_SHORT).show()
+                    finish()
+                },
+                doOnError = {
+                    Toast.makeText(this, "Gagal melakukan checkout", Toast.LENGTH_SHORT).show()
                 }
-            }, doOnLoading = {
-                binding.layoutState.root.isVisible = true
-                binding.layoutState.pbLoading.isVisible = true
-                binding.layoutState.tvError.isVisible = false
-                binding.layoutContent.root.isVisible = false
-                binding.layoutContent.rvCart.isVisible = false
-                binding.cvSectionOrder.isVisible = false
-            }, doOnError = {
-                binding.layoutState.root.isVisible = true
-                binding.layoutState.pbLoading.isVisible = false
-                binding.layoutState.tvError.isVisible = true
-                binding.layoutState.tvError.text = result.exception?.message.orEmpty()
-                binding.layoutContent.root.isVisible = false
-                binding.layoutContent.rvCart.isVisible = false
-                binding.cvSectionOrder.isVisible = false
-            }, doOnEmpty = { data ->
-                binding.layoutState.root.isVisible = true
-                binding.layoutState.pbLoading.isVisible = false
-                binding.layoutState.tvError.isVisible = true
-                binding.layoutState.tvError.text = getString(R.string.text_cart_is_empty)
-                data.payload?.let { (_, _, totalPrice) ->
-                    binding.tvTotalPrice.text = totalPrice.toDollarFormat()
-                }
-                binding.layoutContent.root.isVisible = false
-                binding.layoutContent.rvCart.isVisible = false
-                binding.cvSectionOrder.isVisible = false
-            })
-        }
+            )
+        })
     }
 
     private fun showCheckoutDialog() {
         val alertDialog = AlertDialog.Builder(this)
-        alertDialog.setTitle("Konfirmasi Checkout")
-        alertDialog.setMessage("Apakah Anda yakin ingin checkout?")
-        alertDialog.setPositiveButton("Ya") { _, _ ->
-            clearCart()
-            Toast.makeText(this, "Checkout berhasil", Toast.LENGTH_SHORT).show()
-            finish()
-        }
-        alertDialog.setNegativeButton("Tidak") { dialog, _ ->
-            dialog.dismiss()
-        }
-        alertDialog.show()
-    }
+            .setTitle("Konfirmasi Checkout")
+            .setMessage("Apakah Anda yakin ingin checkout?")
+            .setPositiveButton("Ya") { _, _ ->
+                viewModel.checkout()
+            }
+            .setNegativeButton("Tidak") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .create()
 
-    private fun clearCart() {
-        val sharedPreferences = getSharedPreferences("Cart", Context.MODE_PRIVATE)
-        sharedPreferences.edit().clear().apply()
+        alertDialog.show()
     }
 }
