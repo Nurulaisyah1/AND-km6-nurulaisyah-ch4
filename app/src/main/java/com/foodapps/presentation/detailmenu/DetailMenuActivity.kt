@@ -58,13 +58,14 @@ class DetailMenuActivity : AppCompatActivity() {
         }
 
 
-        if(isUserLoggedIn()){
-            Toast.makeText(this, "Harus login dulu", Toast.LENGTH_SHORT).show()
-        }else{
-            binding.btnAddToCart.setOnClickListener {
+        binding.btnAddToCart.setOnClickListener {
+            if (isUserLoggedIn()) {
                 addMenuToCart()
+            } else {
+                Toast.makeText(this, "Harus login dulu", Toast.LENGTH_SHORT).show()
             }
         }
+
     }
 
     private fun addMenuToCart() {
@@ -104,7 +105,6 @@ class DetailMenuActivity : AppCompatActivity() {
         // Check if the current user is authenticated
         return auth.currentUser != null
     }
-
 
 
     private fun observeData() {

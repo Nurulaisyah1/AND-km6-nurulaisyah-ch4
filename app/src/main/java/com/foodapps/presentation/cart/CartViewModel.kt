@@ -6,6 +6,7 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.foodapps.data.model.Cart
 import com.foodapps.data.repository.CartRepository
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -37,6 +38,6 @@ class CartViewModel(private val cartRepository: CartRepository) : ViewModel() {
 }
 
     fun isUserLoggedIn(): Boolean {
-        return true // Placeholder implementation
+        return FirebaseAuth.getInstance().currentUser != null // Placeholder implementation
     }
 
