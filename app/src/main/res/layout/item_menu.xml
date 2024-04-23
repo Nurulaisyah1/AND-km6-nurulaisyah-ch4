@@ -49,16 +49,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/Tv_MenuName" />
 
-        <!-- Tombol "Add to Cart" -->
-        <Button
-            android:id="@+id/btnAddToCart1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/txt_add_to_cart"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/Tv_MenuPrice" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

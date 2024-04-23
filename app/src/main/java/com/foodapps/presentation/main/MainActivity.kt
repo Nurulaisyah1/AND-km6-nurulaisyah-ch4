@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity() {
         // Initialize Firebase Authentication
         auth = FirebaseAuth.getInstance()
 
+
         // Inflate layout using view binding
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -36,12 +37,10 @@ class MainActivity : AppCompatActivity() {
         FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true)
 
         // Check if the user is already logged in
-        if (userIsLoggedIn()) {
+        if (!userIsLoggedIn()) {
             // If logged in, navigate to home fragment
             navigateToHomeFragment()
         } else {
-            // If not logged in, proceed with normal setup
-            // Set up bottom navigation with NavController
             setupBottomNav()
         }
     }

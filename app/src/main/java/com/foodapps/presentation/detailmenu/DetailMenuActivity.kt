@@ -15,14 +15,18 @@ import com.foodapps.data.repository.CartRepository
 import com.foodapps.data.repository.CartRepositoryImpl
 import com.foodapps.data.source.local.database.AppDatabase
 import com.foodapps.databinding.ActivityDetailMenuBinding
+import com.foodapps.presentation.cart.isUserLoggedIn
 import com.foodapps.utils.GenericViewModelFactory
 import com.foodapps.utils.proceedWhen
 import com.foodapps.utils.toDollarFormat
+import com.google.firebase.auth.FirebaseAuth
 
 class DetailMenuActivity : AppCompatActivity() {
     private val binding: ActivityDetailMenuBinding by lazy {
         ActivityDetailMenuBinding.inflate(layoutInflater)
     }
+    private lateinit var auth: FirebaseAuth
+
     private val viewModel: DetailMenuViewModel by viewModels {
         val db = AppDatabase.getInstance(this)
         val ds: CartDataSource = CartDatabaseDataSource(db.cartDao())
@@ -35,6 +39,8 @@ class DetailMenuActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        auth = FirebaseAuth.getInstance()
+        auth.signOut()
         bindMenu(viewModel.menu)
         setClickListener()
         observeData()
@@ -50,8 +56,14 @@ class DetailMenuActivity : AppCompatActivity() {
         binding.ivPlus.setOnClickListener {
             viewModel.add()
         }
-        binding.btnAddToCart.setOnClickListener {
-            addMenuToCart()
+
+
+        if(isUserLoggedIn()){
+            Toast.makeText(this, "Harus login dulu", Toast.LENGTH_SHORT).show()
+        }else{
+            binding.btnAddToCart.setOnClickListener {
+                addMenuToCart()
+            }
         }
     }
 
@@ -87,6 +99,13 @@ class DetailMenuActivity : AppCompatActivity() {
             binding.tvLocation.text = item.address
         }
     }
+
+    private fun userIsLoggedIn(): Boolean {
+        // Check if the current user is authenticated
+        return auth.currentUser != null
+    }
+
+
 
     private fun observeData() {
         viewModel.priceLiveData.observe(this) {

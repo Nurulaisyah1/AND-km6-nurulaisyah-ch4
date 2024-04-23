@@ -89,12 +89,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_menu_description">
 
-        <!-- Icon Lokasi -->
-        <ImageButton
-            android:id="@+id/iv_location_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_tab_home" />
 
         <!-- Text Lokasi -->
         <TextView
@@ -103,12 +97,13 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
+            android:src="@drawable/ic_tab_home"
             android:text="@string/txt_location_resto"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/iv_location_icon" />
+            app:layout_constraintStart_toEndOf="@id/tv_menu_description" />
 
     </LinearLayout>
     <!-- Bottom Action Layout -->

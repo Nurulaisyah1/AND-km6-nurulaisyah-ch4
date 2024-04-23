@@ -1,5 +1,6 @@
 package com.foodapps.presentation.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -25,8 +26,10 @@ import com.foodapps.presentation.detailmenu.DetailMenuActivity
 import com.foodapps.presentation.home.adapter.CategoryListAdapter
 import com.foodapps.presentation.home.adapter.MenuListAdapter
 import com.foodapps.presentation.home.utils.LayoutManagerType
+import com.foodapps.presentation.login.LoginActivity
 import com.foodapps.utils.GenericViewModelFactory
 import com.foodapps.utils.GridSpacingItemDecoration
+import com.foodapps.utils.Preferences
 import com.foodapps.utils.proceedWhen
 
 class HomeFragment : Fragment() {
@@ -42,7 +45,6 @@ class HomeFragment : Fragment() {
         GenericViewModelFactory.create(HomeViewModel(categoryRepository, productRepository))
     }
 
-    private var isGrid = false
     private val categoryAdapter: CategoryListAdapter by lazy {
         CategoryListAdapter { category ->
             getMenuData(category.slug)
@@ -50,7 +52,7 @@ class HomeFragment : Fragment() {
     }
 
     private val menuAdapter: MenuListAdapter by lazy {
-        MenuListAdapter(mutableListOf()) { menu ->
+        MenuListAdapter(mutableListOf(),if(Preferences.getLoggedStatus(requireActivity()))  LayoutManagerType.LINEAR_LAYOUT_MANAGER else  LayoutManagerType.GRID_LAYOUT_MANAGER) { menu ->
             DetailMenuActivity.startActivity(requireContext(), menu)
         }
     }
@@ -61,7 +63,6 @@ class HomeFragment : Fragment() {
             LayoutManagerType.GRID_LAYOUT_MANAGER -> GridLayoutManager(requireContext(), 2) // Sesuaikan jumlah kolom di sini
         }
         binding.rvProductList.layoutManager = layoutManager
-        menuAdapter.setLayoutManagerType(layoutManagerType)
     }
 
 
@@ -79,15 +80,20 @@ class HomeFragment : Fragment() {
         setupListCategory()
         getCategoryData() // Fetch category data when fragment is created
         getMenuData(null) // Fetch menu data with null slug initially
+        Toast.makeText(requireContext(), "${Preferences.getLoggedStatus(requireActivity())}", Toast.LENGTH_SHORT).show()
         binding.btnSwitch.setOnClickListener {
             menuAdapter.notifyDataSetChanged()
-            isGrid = !isGrid
+            Preferences.setLoggedStatus(requireActivity(),!Preferences.getLoggedStatus(requireActivity()))
 
-            if(isGrid){
+            if(Preferences.getLoggedStatus(requireActivity())){
                 switchLayoutManager(LayoutManagerType.LINEAR_LAYOUT_MANAGER)
             }else{
                 switchLayoutManager(LayoutManagerType.GRID_LAYOUT_MANAGER)
             }
+        }
+
+        binding.layoutHeader.ivProfileHeaderHome.setOnClickListener {
+            startActivity(Intent(requireContext(),LoginActivity::class.java))
         }
     }
 

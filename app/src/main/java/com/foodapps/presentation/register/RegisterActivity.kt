@@ -2,10 +2,12 @@ package com.foodapps.presentation.register
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.foodapps.databinding.ActivityRegisterBinding
 import com.foodapps.presentation.login.LoginActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.UserProfileChangeRequest
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -20,32 +22,54 @@ class RegisterActivity : AppCompatActivity() {
         // Initialize Firebase Auth
         auth = FirebaseAuth.getInstance()
 
-        binding.btnRegister.setOnClickListener {
-            registerUser()
-        }
+        binding.btnRegister.setOnClickListener { registerUser() }
 
-        binding.btnNavToLogin.setOnClickListener {
-            navigateToLogin()
-        }
+        binding.btnNavToLogin.setOnClickListener { navigateToLogin() }
     }
 
     private fun registerUser() {
-//        val name = this.binding.et_name.text.toString()
-//        val email = this.binding.et_email.text.toString()
-//        val password =this.binding.et_password.text.toString()
-//        val confirmpassword = this.binding.et_confirm_password.text.toString()
+        binding.apply {
+            btnRegister.setOnClickListener {
+                val email = etEmail.text.toString()
+                val password = etPassword.text.toString()
+                val name = etName.text.toString()
+                if(email.isNotBlank() && password.isNotBlank()){
+                    if(password == etConfirmPassword.text.toString()){
+                        processRegister(email,password,name)
+                    }else{
+                        Toast.makeText(this@RegisterActivity, "Password tidak sama", Toast.LENGTH_SHORT).show()
+                    }
+                }else{
+                    Toast.makeText(this@RegisterActivity, "Kolom tidak boleh koson", Toast.LENGTH_SHORT).show()
+                }
+            }
 
-//        auth.createUserWithEmailAndPassword(email, password)
-//            .addOnCompleteListener(this) { task ->
-//                if (task.isSuccessful) {
-//                    // Registration success
-//                    Toast.makeText(this, "Registration successful", Toast.LENGTH_SHORT).show()
-//                    // Navigate to the next screen or perform any other actions
-//                } else {
-//                    // Registration failed
-//                    Toast.makeText(this, "Registration failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
-//                }
-//            }
+        }
+    }
+
+    private fun processRegister(email : String,password : String,name:String){
+        auth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    val profileUpdates = UserProfileChangeRequest.Builder()
+                        .setDisplayName(name)
+                        .build()
+
+                    val user = auth.currentUser
+                    user?.updateProfile(profileUpdates)
+                        ?.addOnCompleteListener { taskUpdate ->
+                            if (task.isSuccessful) {
+                               startActivity(Intent(this,LoginActivity::class.java).also {
+                                   Toast.makeText(this, "Register Successfully", Toast.LENGTH_SHORT).show()
+                               })
+                            } else {
+                                Toast.makeText(this, "${taskUpdate.exception?.message}", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                } else {
+                    Toast.makeText(this, "${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                }
+            }
     }
 
     private fun navigateToLogin() {

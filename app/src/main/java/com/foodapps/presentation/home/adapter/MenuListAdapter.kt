@@ -13,7 +13,7 @@ import com.foodapps.utils.toDollarFormat
 
 class MenuListAdapter(
     private val menuList: List<Menu>,
-    private var layoutManagerType: LayoutManagerType = LayoutManagerType.LINEAR_LAYOUT_MANAGER,
+    private var layoutManagerType: LayoutManagerType,
     private val onItemClick: (Menu) -> Unit) :
     RecyclerView.Adapter<MenuListAdapter.ItemMenuViewHolder>() {
 
@@ -41,10 +41,6 @@ class MenuListAdapter(
         dataDiffer.submitList(data)
     }
 
-    fun setLayoutManagerType(layoutManagerType: LayoutManagerType) {
-        this.layoutManagerType = layoutManagerType
-        notifyDataSetChanged()
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemMenuViewHolder {
         val binding = ItemMenuBinding.inflate(LayoutInflater.from(parent.context), parent, false)

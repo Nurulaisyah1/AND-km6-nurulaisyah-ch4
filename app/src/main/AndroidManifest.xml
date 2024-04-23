@@ -18,24 +18,33 @@
 
         <activity
             android:name=".presentation.login.LoginActivity"
-            android:exported="false" />
+            android:exported="false">
+
+
+
+
+        </activity>
         <activity
             android:name=".presentation.register.RegisterActivity"
             android:exported="false" />
         <activity
             android:name=".presentation.detailmenu.DetailMenuActivity"
-            android:exported="false" />
+            android:exported="false">
+
+        </activity>
         <activity
             android:name=".presentation.checkout.CheckoutActivity"
             android:exported="false" />
         <activity
             android:name=".presentation.main.MainActivity"
             android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
     </application>
 
