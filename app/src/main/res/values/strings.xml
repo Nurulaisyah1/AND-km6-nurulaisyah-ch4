@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">FoodApps</string>
-    <string name="title_tab_home">title_tab_home</string>
-    <string name="title_tab_cart">title_tab_cart</string>
-    <string name="title_tab_profile">title_tab_profile</string>
+    <string name="title_tab_home">home</string>
+    <string name="title_tab_cart">cart</string>
+    <string name="title_tab_profile">profile</string>
     <string name="text_btn_add_to_cart">text_btn_add_to_cart</string>
     <string name="you_might_looking_for">you_might_looking_for</string>
     <string name="hint_name">Name\n</string>
@@ -81,4 +81,7 @@
     <string name="name_menu">Name Menu</string>
     <string name="price_menu">Price Menu</string>
     <string name="text_generic_error">error</string>
+    <string name="create_order_success">vreate order success</string>
+    <string name="close">close\n</string>
+    <string name="error_checkout">cekhout_eror\n</string>
 </resources>

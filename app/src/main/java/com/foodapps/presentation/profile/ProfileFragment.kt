@@ -1,11 +1,11 @@
-package com.foodapps.profile
+package com.foodapps.presentation.profile
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import coil.load
 import coil.transform.CircleCropTransformation
@@ -36,7 +36,7 @@ class ProfileFragment : Fragment() {
 
     private fun observeProfileData() {
         viewModel.profileData.observe(viewLifecycleOwner) {
-            binding.ivProfile.load(it.profileImg) {
+            binding.ivProfile.load("https://github.com/Nurulaisyah1/Food_Asset/blob/main/img_nurulaisyah.jpg") {
                 crossfade(true)
                 error(R.drawable.ic_tab_profile)
                 transformations(CircleCropTransformation())

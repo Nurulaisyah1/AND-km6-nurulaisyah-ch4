@@ -4,15 +4,16 @@ import com.foodapps.data.model.Menu
 import com.foodapps.data.source.network.model.menus.MenuItemResponse
 
 
-fun MenuItemResponse?.toProduct() =
+fun MenuItemResponse?.toMenus() =
     Menu(
         id = this?.id.orEmpty(),
         name = this?.name.orEmpty(),
         price = this?.price ?: 0.0,
         imgUrl = this?.imgUrl.orEmpty(),
-        description = this?.description.orEmpty()
+        detail = this?.description.orEmpty(),
+        address = this?.address.orEmpty()
     )
 
-fun Collection<MenuItemResponse>?.toProducts() = this?.map {
-    it.toProduct()
+fun Collection<MenuItemResponse>?.toMenus() = this?.map {
+    it.toMenus()
 } ?: listOf()

@@ -3,7 +3,8 @@ plugins {
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.ksp)
     id("kotlin-parcelize")
-
+    id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
 }
 
 android {
@@ -78,6 +79,7 @@ dependencies {
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.room.ktx)
     implementation(libs.firebase.crashlytics.ktx)
+    implementation(libs.firebase.auth)
     ksp(libs.room.compiler)
     implementation(libs.coroutine.core)
     implementation(libs.coroutine.android)
@@ -86,11 +88,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    implementation("com.google.code.gson:gson:2.8.8")
-    implementation ("com.google.firebase:firebase-auth-ktx:21.0.1")
-    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.4.0")
-    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0")
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
 
 
 

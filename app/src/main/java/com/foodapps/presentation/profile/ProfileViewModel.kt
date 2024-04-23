@@ -1,4 +1,4 @@
-package com.foodapps.profile
+package com.foodapps.presentation.profile
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

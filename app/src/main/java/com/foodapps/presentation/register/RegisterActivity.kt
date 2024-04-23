@@ -1,82 +1,56 @@
 package com.foodapps.presentation.register
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.foodapps.databinding.ActivityRegisterBinding
-import com.foodapps.utils.GenericViewModelFactory
-import com.google.android.material.textfield.TextInputLayout
+import com.foodapps.presentation.login.LoginActivity
+import com.google.firebase.auth.FirebaseAuth
 
 class RegisterActivity : AppCompatActivity() {
-    private val binding: ActivityRegisterBinding by lazy {
-        ActivityRegisterBinding.inflate(layoutInflater)
-    }
-    private val viewModel: RegisterViewModel by viewModels {
-        GenericViewModelFactory.create(createViewModel())
-    }
 
-    private fun createViewModel(): RegisterViewModel {
-        return RegisterViewModel()
-    }
+    private lateinit var binding: ActivityRegisterBinding
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setupForm()
-        setClickListeners()
-        observeResult()
+
+        // Initialize Firebase Auth
+        auth = FirebaseAuth.getInstance()
+
+        binding.btnRegister.setOnClickListener {
+            registerUser()
+        }
+
+        binding.btnNavToLogin.setOnClickListener {
+            navigateToLogin()
+        }
     }
 
-    private fun setClickListeners() {
-        //todo : setup click listener
+    private fun registerUser() {
+//        val name = this.binding.et_name.text.toString()
+//        val email = this.binding.et_email.text.toString()
+//        val password =this.binding.et_password.text.toString()
+//        val confirmpassword = this.binding.et_confirm_password.text.toString()
+
+//        auth.createUserWithEmailAndPassword(email, password)
+//            .addOnCompleteListener(this) { task ->
+//                if (task.isSuccessful) {
+//                    // Registration success
+//                    Toast.makeText(this, "Registration successful", Toast.LENGTH_SHORT).show()
+//                    // Navigate to the next screen or perform any other actions
+//                } else {
+//                    // Registration failed
+//                    Toast.makeText(this, "Registration failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+//                }
+//            }
     }
 
     private fun navigateToLogin() {
-        //todo : navigate to login
-    }
-
-    private fun doRegister() {
-        //todo : check form first, if pass then register
-    }
-
-    private fun observeResult() {
-        //todo : observe result register here
-    }
-
-    private fun navigateToMain() {
-        //todo : navigate to Main
-    }
-
-
-    private fun setupForm() {
-        //todo : setup form
-    }
-
-    private fun isFormValid(): Boolean {
-        //todo : check form validation
-        return false
-    }
-
-    private fun checkNameValidation(fullName: String): Boolean {
-        //todo : check form validation
-        return false
-    }
-
-    private fun checkEmailValidation(email: String): Boolean {
-        //todo : check form validation
-        return false
-    }
-
-    private fun checkPasswordValidation(
-        confirmPassword: String,
-        textInputLayout: TextInputLayout
-    ): Boolean {
-        //todo : check form validation
-        return false
-    }
-
-    private fun checkPwdAndConfirmPwd(password: String, confirmPassword: String): Boolean {
-        //todo : check form validation
-        return false
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 }

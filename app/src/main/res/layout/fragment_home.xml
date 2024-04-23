@@ -34,6 +34,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/et_search" />
 
+    <LinearLayout
+        android:id="@+id/linear_banner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/et_search">
+
+        <include
+            layout="@layout/layout_banner_home"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </LinearLayout>
+
 
 
     <!-- Kategori -->
@@ -48,7 +63,7 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/iv_seacrh"
+        app:layout_constraintTop_toBottomOf="@id/linear_banner"
         tools:listitem="@layout/item_category_menu" />
     <!-- NestedScrollView -->
     <androidx.core.widget.NestedScrollView
@@ -72,6 +87,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageButton
+                android:id="@+id/btn_switch"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginTop="4dp"

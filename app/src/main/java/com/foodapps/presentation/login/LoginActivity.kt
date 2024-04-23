@@ -1,9 +1,11 @@
 package com.foodapps.presentation.login
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.foodapps.databinding.ActivityLoginBinding
+import com.foodapps.presentation.register.RegisterActivity
 import com.foodapps.utils.GenericViewModelFactory
 import com.google.android.material.textfield.TextInputLayout
 
@@ -42,11 +44,17 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setClickListeners() {
-        //todo : set click listeners
+        // Mendapatkan referensi ke tombol register
+        binding.btnRegister.setOnClickListener {
+            navigateToRegister()
+        }
+        //todo : set click listeners for other buttons
     }
 
     private fun navigateToRegister() {
-        //todo : navigate to register
+        // Intent untuk pindah ke layout pendaftaran (RegisterActivity)
+        val intent = Intent(this, RegisterActivity::class.java)
+        startActivity(intent) // Memulai activity baru
     }
 
     private fun doLogin() {

@@ -6,12 +6,14 @@ import com.google.gson.annotations.SerializedName
 data class MenuItemResponse(
     @SerializedName("id")
     val id : String?,
-    @SerializedName("name")
+    @SerializedName("nama")
     val name : String?,
-    @SerializedName("img_url")
+    @SerializedName("image_url")
     val imgUrl : String?,
-    @SerializedName("price")
+    @SerializedName("harga")
     val price : Double?,
-    @SerializedName("description")
+    @SerializedName("detail")
     val description : String?,
+    @SerializedName("alamat_resto")
+    val address : String?,
 )

@@ -1,39 +1,28 @@
 package com.foodapps.presentation.checkout
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.foodapps.data.repository.CartRepository
-import com.foodapps.utils.ResultWrapper
+import com.foodapps.data.repository.MenuRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class CheckoutViewModel(private val cartRepository: CartRepository) : ViewModel() {
+class CheckoutViewModel(
+    private val cartRepository: CartRepository,
+    private val menuRepository: MenuRepository
+) : ViewModel() {
 
-    // LiveData untuk hasil checkout
-    private val _checkoutResult = MutableLiveData<ResultWrapper<Boolean>>()
-    val checkoutResult: LiveData<ResultWrapper<Boolean>>
-        get() = _checkoutResult
+    val checkoutData = cartRepository.getCheckoutData().asLiveData(Dispatchers.IO)
 
-    // Menghapus semua item di keranjang saat checkout
-    fun checkout() {
+    fun checkoutCart() = menuRepository.createOrder(
+        checkoutData.value?.payload?.first.orEmpty()
+    ).asLiveData(Dispatchers.IO)
+
+    fun deleteAllCart() {
         viewModelScope.launch {
-            try {
-                // Lakukan proses checkout di repository
-                val result = cartRepository.checkout()
-                // Setel hasil checkout ke LiveData
-                _checkoutResult.postValue(ResultWrapper.Success(result))
-            } catch (e: Exception) {
-                // Jika terjadi kesalahan, setel hasil error ke LiveData
-                _checkoutResult.postValue(ResultWrapper.Error(e))
-            }
-        }
-    }
-
-    // Fungsi untuk menghapus semua item di keranjang
-    fun clearCart() {
-        viewModelScope.launch {
-            cartRepository.deleteAllCarts()
+            cartRepository.deleteAllCart().collect {}
         }
     }
 }

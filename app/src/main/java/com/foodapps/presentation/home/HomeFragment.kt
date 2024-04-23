@@ -7,12 +7,25 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.foodapps.data.datasource.category.CategoryApiDataSource
+import com.foodapps.data.datasource.category.CategoryDataSource
+import com.foodapps.data.datasource.menu.MenuApiDataSource
+import com.foodapps.data.datasource.menu.MenuDataSource
 import com.foodapps.data.model.Category
 import com.foodapps.data.model.Menu
+import com.foodapps.data.network.services.FoodAppApiService
+import com.foodapps.data.repository.CategoryRepository
+import com.foodapps.data.repository.CategoryRepositoryImpl
+import com.foodapps.data.repository.MenuRepository
+import com.foodapps.data.repository.MenuRepositoryImpl
 import com.foodapps.databinding.FragmentHomeBinding
-import com.foodapps.presentation.DetailMenu.DetailMenuActivity
+import com.foodapps.presentation.detailmenu.DetailMenuActivity
 import com.foodapps.presentation.home.adapter.CategoryListAdapter
 import com.foodapps.presentation.home.adapter.MenuListAdapter
+import com.foodapps.presentation.home.utils.LayoutManagerType
+import com.foodapps.utils.GenericViewModelFactory
 import com.foodapps.utils.GridSpacingItemDecoration
 import com.foodapps.utils.proceedWhen
 
@@ -20,11 +33,19 @@ class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
 
-    private val viewModel: HomeViewModel by viewModels()
+    private val viewModel: HomeViewModel by viewModels {
+        val service = FoodAppApiService.invoke()
+        val productDataSource: MenuDataSource = MenuApiDataSource(service)
+        val productRepository: MenuRepository = MenuRepositoryImpl(productDataSource)
+        val categoryDataSource: CategoryDataSource = CategoryApiDataSource(service)
+        val categoryRepository: CategoryRepository = CategoryRepositoryImpl(categoryDataSource)
+        GenericViewModelFactory.create(HomeViewModel(categoryRepository, productRepository))
+    }
 
+    private var isGrid = false
     private val categoryAdapter: CategoryListAdapter by lazy {
-        CategoryListAdapter {
-            getCategoryData(it.slug)
+        CategoryListAdapter { category ->
+            getMenuData(category.slug)
         }
     }
 
@@ -33,6 +54,16 @@ class HomeFragment : Fragment() {
             DetailMenuActivity.startActivity(requireContext(), menu)
         }
     }
+
+    fun switchLayoutManager(layoutManagerType: LayoutManagerType) {
+        val layoutManager = when (layoutManagerType) {
+            LayoutManagerType.LINEAR_LAYOUT_MANAGER -> LinearLayoutManager(requireContext())
+            LayoutManagerType.GRID_LAYOUT_MANAGER -> GridLayoutManager(requireContext(), 2) // Sesuaikan jumlah kolom di sini
+        }
+        binding.rvProductList.layoutManager = layoutManager
+        menuAdapter.setLayoutManagerType(layoutManagerType)
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,29 +79,47 @@ class HomeFragment : Fragment() {
         setupListCategory()
         getCategoryData() // Fetch category data when fragment is created
         getMenuData(null) // Fetch menu data with null slug initially
+        binding.btnSwitch.setOnClickListener {
+            menuAdapter.notifyDataSetChanged()
+            isGrid = !isGrid
+
+            if(isGrid){
+                switchLayoutManager(LayoutManagerType.LINEAR_LAYOUT_MANAGER)
+            }else{
+                switchLayoutManager(LayoutManagerType.GRID_LAYOUT_MANAGER)
+            }
+        }
     }
 
     private fun getCategoryData() {
         viewModel.getCategories().observe(viewLifecycleOwner) { result ->
             result.proceedWhen(
-                doOnSuccess = { categoryList ->
-                    categoryList.payload?.let { bindCategoryList(it) }
+                doOnSuccess = { getCategories ->
+                    getCategories.payload?.let { bindCategoryList(it) }
                 },
                 doOnError = { error ->
-                    Toast.makeText(requireContext(), "Failed to fetch category list: ${error.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "$error ${error.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             )
         }
     }
 
     private fun getMenuData(slug: String?) {
-        viewModel.getMenusByCategory(slug).observe(viewLifecycleOwner) { result ->
+        viewModel.getMenus(slug).observe(viewLifecycleOwner) { result ->
             result.proceedWhen(
-                doOnSuccess = { menuList ->
-                    bindMenuList(menuList)
+                doOnSuccess = { getMenus ->
+                    bindMenuList(getMenus.payload.orEmpty())
                 },
                 doOnError = { error ->
-                    Toast.makeText(requireContext(), "Failed to fetch menu list: ${error.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "Failed to fetch menu list: ${error.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             )
         }

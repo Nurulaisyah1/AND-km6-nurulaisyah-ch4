@@ -10,7 +10,8 @@ fun MenuResponse.toMenus(): List<Menu> {
             name = MenuItemResponse.name.orEmpty(),
             imgUrl = MenuItemResponse.imgUrl.orEmpty(),
             price = MenuItemResponse.price ?: 0.0,
-            description = MenuItemResponse.description.orEmpty()
+            detail = MenuItemResponse.description.orEmpty(),
+            address = MenuItemResponse.address.orEmpty()
         )
     } ?: emptyList()
 }

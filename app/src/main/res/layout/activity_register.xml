@@ -49,15 +49,17 @@
             android:visibility="gone" />
     </FrameLayout>
 
-    <TextView
-        android:id="@+id/tv_nav_to_login"
+    <Button
+        android:id="@+id/btn_nav_to_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="16dp"
         android:text="@string/text_already_have_an_account_click_here"
+        android:textColor="@color/black"
         android:textAlignment="center"
         app:layout_constraintTop_toBottomOf="@id/fl_btn_loading_state"
-        tools:layout_editor_absoluteX="16dp" />
+        tools:layout_editor_absoluteX="16dp"
+        android:backgroundTint="@color/white"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

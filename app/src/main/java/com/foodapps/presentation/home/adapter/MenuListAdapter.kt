@@ -5,12 +5,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
+import com.bumptech.glide.Glide
 import com.foodapps.data.model.Menu
 import com.foodapps.databinding.ItemMenuBinding
+import com.foodapps.presentation.home.utils.LayoutManagerType
 import com.foodapps.utils.toDollarFormat
 
-class MenuListAdapter(private val menuList: List<Menu>, private val onItemClick: (Menu) -> Unit) :
+class MenuListAdapter(
+    private val menuList: List<Menu>,
+    private var layoutManagerType: LayoutManagerType = LayoutManagerType.LINEAR_LAYOUT_MANAGER,
+    private val onItemClick: (Menu) -> Unit) :
     RecyclerView.Adapter<MenuListAdapter.ItemMenuViewHolder>() {
 
     private val dataDiffer =
@@ -37,6 +41,11 @@ class MenuListAdapter(private val menuList: List<Menu>, private val onItemClick:
         dataDiffer.submitList(data)
     }
 
+    fun setLayoutManagerType(layoutManagerType: LayoutManagerType) {
+        this.layoutManagerType = layoutManagerType
+        notifyDataSetChanged()
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemMenuViewHolder {
         val binding = ItemMenuBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ItemMenuViewHolder(binding, onItemClick)
@@ -55,12 +64,11 @@ class MenuListAdapter(private val menuList: List<Menu>, private val onItemClick:
 
         fun bindView(item: Menu) {
             with(item) {
-                binding.imageViewMenu.load(imgUrl) {
-                    crossfade(true)
-                }
+               Glide.with(binding.root).load(imgUrl).into(binding.imageViewMenu)
                 binding.TvMenuName.text = name
                 binding.TvMenuPrice.text = price.toDollarFormat()
                 itemView.setOnClickListener { itemClick(this) }
+
             }
         }
     }

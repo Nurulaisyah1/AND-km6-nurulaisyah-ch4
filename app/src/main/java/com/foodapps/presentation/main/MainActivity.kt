@@ -1,6 +1,5 @@
 package com.foodapps.presentation.main
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -9,9 +8,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.foodapps.R
 import com.foodapps.databinding.ActivityMainBinding
-import com.foodapps.main.MainViewModel
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 
 class MainActivity : AppCompatActivity() {
@@ -63,40 +60,4 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
         binding.navView.setupWithNavController(navController)
     }
-
-    private fun navigateToHome() {
-        // Implement navigation to home activity
-        startActivity(Intent(this, HomeActivity::class.java))
-        finish() // Optional, to close the MainActivity after navigating to HomeActivity
-    }
-
-    private fun navigateToLogin() {
-        // Implement navigation to login activity
-        startActivity(Intent(this, LoginActivity::class.java))
-        finish() // Optional, to close the MainActivity after navigating to LoginActivity
-    }
-
-    private fun createViewModel(): MainViewModel {
-        return MainViewModel()
-    }
-}
-
-class LoginActivity : AppCompatActivity() {
-    // Implement login activity
-}
-
-class RegisterActivity : AppCompatActivity() {
-    // Implement register activity
-}
-
-class HomeActivity : AppCompatActivity() {
-    // Implement home activity
-}
-
-class ProfileActivity : AppCompatActivity() {
-    // Implement profile activity
-}
-
-class CartActivity : AppCompatActivity() {
-    // Implement cart activity
 }

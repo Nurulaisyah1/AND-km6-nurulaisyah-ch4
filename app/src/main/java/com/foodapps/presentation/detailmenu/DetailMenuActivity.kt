@@ -1,35 +1,32 @@
-package com.foodapps.presentation.DetailMenu
+package com.foodapps.presentation.detailmenu
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.os.Parcelable
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import coil.load
 import com.foodapps.R
+import com.foodapps.data.datasource.cart.CartDataSource
+import com.foodapps.data.datasource.cart.CartDatabaseDataSource
 import com.foodapps.data.model.Menu
 import com.foodapps.data.repository.CartRepository
 import com.foodapps.data.repository.CartRepositoryImpl
-import com.foodapps.data.source.local.database.dao.CartDao
+import com.foodapps.data.source.local.database.AppDatabase
 import com.foodapps.databinding.ActivityDetailMenuBinding
 import com.foodapps.utils.GenericViewModelFactory
 import com.foodapps.utils.proceedWhen
 import com.foodapps.utils.toDollarFormat
-import java.io.Serializable
 
 class DetailMenuActivity : AppCompatActivity() {
-
     private val binding: ActivityDetailMenuBinding by lazy {
         ActivityDetailMenuBinding.inflate(layoutInflater)
     }
-
     private val viewModel: DetailMenuViewModel by viewModels {
         val db = AppDatabase.getInstance(this)
-        val cartDao: CartDao = db.cartDao() // Gunakan CartDao di sini
-        val rp: CartRepository = CartRepositoryImpl(cartDao) // Gunakan CartDao di sini
+        val ds: CartDataSource = CartDatabaseDataSource(db.cartDao())
+        val rp: CartRepository = CartRepositoryImpl(ds)
         GenericViewModelFactory.create(
             DetailMenuViewModel(intent?.extras, rp)
         )
@@ -41,7 +38,6 @@ class DetailMenuActivity : AppCompatActivity() {
         bindMenu(viewModel.menu)
         setClickListener()
         observeData()
-        setRestaurantLocation()
     }
 
     private fun setClickListener() {
@@ -60,8 +56,8 @@ class DetailMenuActivity : AppCompatActivity() {
     }
 
     private fun addMenuToCart() {
-        viewModel.addToCart().observe(this) { result ->
-            result.proceedWhen(
+        viewModel.addToCart().observe(this) {
+            it.proceedWhen(
                 doOnSuccess = {
                     Toast.makeText(
                         this,
@@ -69,8 +65,8 @@ class DetailMenuActivity : AppCompatActivity() {
                     ).show()
                     finish()
                 },
-                doOnError = { error ->
-                    Toast.makeText(this, error.message, Toast.LENGTH_SHORT)
+                doOnError = {
+                    Toast.makeText(this, getString(R.string.add_to_cart_failed), Toast.LENGTH_SHORT)
                         .show()
                 },
                 doOnLoading = {
@@ -86,8 +82,9 @@ class DetailMenuActivity : AppCompatActivity() {
                 crossfade(true)
             }
             binding.tvMenuName.text = item.name
+            binding.tvMenuDescription.text = item.detail
             binding.tvMenuPrice.text = item.price.toDollarFormat()
-            binding.tvMenuDescription.text = item.description // Tampilkan deskripsi menu
+            binding.tvLocation.text = item.address
         }
     }
 
@@ -101,23 +98,11 @@ class DetailMenuActivity : AppCompatActivity() {
         }
     }
 
-    private fun setRestaurantLocation() {
-        binding.ivLocationIcon.setOnClickListener {
-            val gmmIntentUri = Uri.parse("https://g.co/kgs/9bLEzhA")
-            val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
-            mapIntent.setPackage("com.google.android.apps.maps")
-            if (mapIntent.resolveActivity(packageManager) != null) {
-                startActivity(mapIntent)
-            }
-        }
-    }
-
     companion object {
-        const val EXTRA_MENU = "EXTRA_MENU"
+        const val EXRA_MENU = "EXRA_MENU"
         fun startActivity(context: Context, menu: Menu) {
             val intent = Intent(context, DetailMenuActivity::class.java)
-            intent.putExtra(EXTRA_MENU, menu as Serializable)
-            intent.putExtra(EXTRA_MENU, menu as Parcelable)
+            intent.putExtra(EXRA_MENU, menu)
             context.startActivity(intent)
         }
     }

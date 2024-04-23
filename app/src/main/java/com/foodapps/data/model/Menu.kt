@@ -2,19 +2,18 @@ package com.foodapps.data.model
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
-import java.io.Serializable
 import java.util.UUID
-
 
 
 @Parcelize
 data class Menu(
-    @SerializedName("name") var name: String,
-    @SerializedName("imgUrl") var imgUrl: String = "",
-    @SerializedName("price") var price: Double,
-    @SerializedName("description") var description: String,
+    @SerializedName("nama") var name: String,
+    @SerializedName("image_url") var imgUrl: String = "",
+    @SerializedName("harga") var price: Double,
+    @SerializedName("detail") var detail: String,
+    @SerializedName("alamat_resto") var address: String,
     var id: String = UUID.randomUUID().toString()
-) : Parcelable, Serializable {
+) : Parcelable {
 
     companion object {
         const val EXTRA_MENU = "EXTRA_MENU"

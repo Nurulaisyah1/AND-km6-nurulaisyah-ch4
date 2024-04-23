@@ -12,7 +12,7 @@
         tools:layout="@layout/fragment_cart" />
     <fragment
         android:id="@+id/menu_tab_profile"
-        android:name="com.foodapps.profile.ProfileFragment"
+        android:name="com.foodapps.presentation.profile.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
     <fragment
