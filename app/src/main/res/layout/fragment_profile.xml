@@ -1,80 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:layout_height="match_parent">
+
+    <!-- Header with Edit and Logout Icons -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/header_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- Edit Button -->
+        <ImageButton
+            android:id="@+id/btn_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_edit"
+            app:layout_constraintEnd_toStartOf="@id/btn_logout"
+            app:layout_constraintTop_toTopOf="parent"
+            android:backgroundTint="@color/white"/>
+
+        <!-- Logout Button -->
+        <ImageButton
+            android:id="@+id/btn_logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_logout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/btn_edit"
+            android:backgroundTint="@color/white"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- Profile Image -->
     <ImageView
         android:id="@+id/iv_profile"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginVertical="16dp"
+        android:layout_marginTop="32dp"
         android:src="@drawable/ic_tab_profile"
-        app:srcCompat="@drawable/ic_tab_profile" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header_layout" />
 
     <!-- Name Input -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/name_input_layout"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp">
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_profile">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/name_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_name"
-            android:text="@string/text_name"
-            android:enabled="false" />
+            android:enabled="false"
+            android:hint="@string/name"
+            android:text="@string/name_profile" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Username Input -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/username_input_layout"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp">
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/name_input_layout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/username_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/text_hint_username"
-            android:text="@string/text_username"
-            android:enabled="false" />
+            android:enabled="false"
+            android:hint="@string/username"
+            android:text="@string/username_profile" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Email Input -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/email_input_layout"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp">
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/username_input_layout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/email_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/text_hint_email"
+            android:enabled="false"
+            android:hint="@string/email"
             android:inputType="textEmailAddress"
-            android:text="@string/text_email"
-            android:enabled="false" />
+            android:text="@string/Email_Profile" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!-- Edit Button -->
-    <Button
-        android:id="@+id/btn_edit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/text_edit" />
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,10 +6,12 @@
     android:paddingBottom="16dp">
 
     <ImageView
-        android:id="@+id/iv_settings"
-        android:layout_width="33dp"
-        android:layout_height="33dp"
-        android:src="@drawable/ic_more"
+
+        android:id="@+id/iv_profile_header_home"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_profile"
+        android:layout_margin="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -20,7 +22,6 @@
         android:layout_marginEnd="8dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/iv_settings"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 

@@ -1,10 +1,10 @@
-
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.ksp)
     id("kotlin-parcelize")
-
+    id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
 }
 
 android {
@@ -41,9 +41,26 @@ android {
         viewBinding = true
     }
     buildFeatures {
-        dataBinding= true
+        dataBinding = true
+        buildConfig = true
     }
-
+    flavorDimensions += "env"
+    productFlavors {
+        create("production") {
+            buildConfigField(
+                type = "String",
+                name = "BASE_URL",
+                value = "\"https://api-restaurant.binaracademy.org/\""
+            )
+        }
+        create("integration") {
+            buildConfigField(
+                type = "String",
+                name = "BASE_URL",
+                value = "\"https://api-restaurant.binaracademy.org/\""
+            )
+        }
+    }
 }
 
 dependencies {
@@ -61,13 +78,22 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.room.ktx)
-    implementation(libs.firebase.crashlytics.buildtools)
+    implementation(libs.firebase.crashlytics.ktx)
+    implementation(libs.firebase.auth)
     ksp(libs.room.compiler)
     implementation(libs.coroutine.core)
     implementation(libs.coroutine.android)
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.gson)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    implementation("com.google.code.gson:gson:2.8.8")
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
+
+
+
+
+
+
 
 }

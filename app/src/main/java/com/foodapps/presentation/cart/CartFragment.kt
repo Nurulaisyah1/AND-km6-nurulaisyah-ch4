@@ -11,10 +11,10 @@ import androidx.fragment.app.viewModels
 import com.foodapps.R
 import com.foodapps.data.datasource.cart.CartDataSource
 import com.foodapps.data.datasource.cart.CartDatabaseDataSource
-import com.foodapps.data.local.database.AppDatabase
 import com.foodapps.data.model.Cart
 import com.foodapps.data.repository.CartRepository
 import com.foodapps.data.repository.CartRepositoryImpl
+import com.foodapps.data.source.local.database.AppDatabase
 import com.foodapps.databinding.FragmentCartBinding
 import com.foodapps.presentation.checkout.CheckoutActivity
 import com.foodapps.presentation.common.adapter.CartListAdapter
@@ -23,7 +23,6 @@ import com.foodapps.utils.GenericViewModelFactory
 import com.foodapps.utils.hideKeyboard
 import com.foodapps.utils.proceedWhen
 import com.foodapps.utils.toDollarFormat
-
 
 class CartFragment : Fragment() {
 
@@ -62,6 +61,7 @@ class CartFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
+
         binding = FragmentCartBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
@@ -93,9 +93,9 @@ class CartFragment : Fragment() {
                     binding.layoutState.pbLoading.isVisible = false
                     binding.layoutState.tvError.isVisible = false
                     binding.rvCart.isVisible = true
-                    result.payload?.let { (menus, totalPrice) ->
-                        //set list menu data
-                        adapter.submitData(menus)
+                    result.payload?.let { (carts, totalPrice) ->
+                        //set list cart data
+                        adapter.submitData(carts)
                         binding.tvTotalPrice.text = totalPrice.toDollarFormat()
                     }
                 },
@@ -112,7 +112,7 @@ class CartFragment : Fragment() {
                     binding.layoutState.tvError.isVisible = true
                     binding.layoutState.tvError.text = getString(R.string.text_cart_is_empty)
                     binding.rvCart.isVisible = false
-                    result.payload?.let { (menus, totalPrice) ->
+                    result.payload?.let { (carts, totalPrice) ->
                         binding.tvTotalPrice.text = totalPrice.toDollarFormat()
                     }
                 }

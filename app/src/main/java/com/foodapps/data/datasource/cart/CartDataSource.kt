@@ -1,10 +1,11 @@
-package  com.foodapps.data.datasource.cart
+package com.foodapps.data.datasource.cart
 
-import com.foodapps.data.local.database.dao.CartDao
-import com.foodapps.data.local.database.entity.CartEntity
+
+import com.foodapps.data.source.local.database.dao.CartDao
+import com.foodapps.data.source.local.database.entity.CartEntity
 import kotlinx.coroutines.flow.Flow
 
-
+// CartDataSource interface
 interface CartDataSource {
     fun getAllCarts(): Flow<List<CartEntity>>
     suspend fun insertCart(cart: CartEntity): Long

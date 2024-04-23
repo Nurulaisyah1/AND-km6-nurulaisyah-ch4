@@ -1,25 +1,26 @@
 package com.foodapps.data.mapper
 
-import com.foodapps.data.local.database.entity.CartEntity
 import com.foodapps.data.model.Cart
-
+import com.foodapps.data.source.local.database.entity.CartEntity
 
 fun Cart?.toCartEntity() = CartEntity(
     id = this?.id,
-    menuId = this?.menuId ?:  "",
+    menuId = this?.menuId.orEmpty(),
     itemQuantity = this?.itemQuantity ?: 0,
     menuName = this?.menuName.orEmpty(),
-    menuPrice = this ?.menuPrice ?: 0.0,
-    menuImgUrl = this?.menuImgUrl.orEmpty()
-
+    menuPrice = this?.menuPrice ?: 0.0,
+    menuImgUrl = this?.menuImgUrl.orEmpty(),
+    itemNotes = this?.itemNotes
 )
-fun CartEntity?.toCart() = Cart (
+
+fun CartEntity?.toCart() = Cart(
     id = this?.id,
-    menuId =this?.menuId ?:  "",
+    menuId = this?.menuId.orEmpty(),
     itemQuantity = this?.itemQuantity ?: 0,
     menuName = this?.menuName.orEmpty(),
-    menuPrice = this ?.menuPrice ?: 0.0,
-    menuImgUrl = this?.menuImgUrl.orEmpty()
+    menuPrice = this?.menuPrice ?: 0.0,
+    menuImgUrl = this?.menuImgUrl.orEmpty(),
+    itemNotes = this?.itemNotes
 )
 
-fun List<CartEntity>.toCartList() = this.map{ it.toCart() }
+fun List<CartEntity?>.toCartList() = this.map { it.toCart() }

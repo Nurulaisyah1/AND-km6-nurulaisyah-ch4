@@ -9,7 +9,6 @@ import com.foodapps.data.model.PriceItem
 import com.foodapps.databinding.ItemPriceBinding
 import com.foodapps.utils.toDollarFormat
 
-
 class PriceListAdapter(private val itemClick: (PriceItem) -> Unit) :
     RecyclerView.Adapter<PriceListAdapter.PriceItemViewHolder>() {
 

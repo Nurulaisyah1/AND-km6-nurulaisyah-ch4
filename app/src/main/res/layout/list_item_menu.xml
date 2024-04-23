@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="4dp">
+
+    <!-- ImageView  gambar menu -->
+    <ImageView
+        android:id="@+id/imageViewMenu"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_gravity="start"
+        android:scaleType="centerCrop"
+        android:src="@drawable/img_food" />
+
+    <!-- LinearLayout  teks -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="start"
+        android:orientation="vertical"
+        android:paddingStart="8dp">
+
+        <!-- TextView  nama menu -->
+        <TextView
+            android:id="@+id/Tv_MenuName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/name_menu"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <!-- TextView  harga menu -->
+        <TextView
+            android:id="@+id/Tv_MenuPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/price_menu"
+            android:textSize="14sp" />
+
+
+    </LinearLayout>
+
+</LinearLayout>

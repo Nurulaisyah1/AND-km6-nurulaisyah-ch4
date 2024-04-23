@@ -1,4 +1,5 @@
 package com.foodapps.presentation.cart
+
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
@@ -8,7 +9,6 @@ import com.foodapps.data.repository.CartRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-
 
 class CartViewModel(private val cartRepository: CartRepository) : ViewModel() {
     fun getAllCarts() = cartRepository.getUserCartData().asLiveData(Dispatchers.IO)
@@ -35,3 +35,8 @@ class CartViewModel(private val cartRepository: CartRepository) : ViewModel() {
         }
     }
 }
+
+    fun isUserLoggedIn(): Boolean {
+        return true // Placeholder implementation
+    }
+
