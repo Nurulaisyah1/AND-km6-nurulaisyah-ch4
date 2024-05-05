@@ -19,21 +19,20 @@ abstract class AppDatabase : RoomDatabase() {
     companion object {
         private const val DB_NAME = "FoodApps.db"
 
-        @Volatile
-        private var INSTANCE: AppDatabase? = null
-        fun getInstance(context: Context): AppDatabase {
-            return INSTANCE ?: synchronized(this) {
-
-                val appContext = context.applicationContext
-                val instance = Room.databaseBuilder(
-                    appContext,
-                    AppDatabase::class.java,
-                    DB_NAME
-                ).fallbackToDestructiveMigration()
-                    .build()
-                INSTANCE = instance
-                instance
-            } ?: throw IllegalStateException("Database instance creation failed")
+        /*        @Volatile
+                private var INSTANCE: AppDatabase? = null*/
+        fun createInstance(context: Context): AppDatabase {
+            // return INSTANCE ?: synchronized(this){
+            //    val instance = Room.databaseBuilder(
+            return Room.databaseBuilder(
+                context.applicationContext,
+                AppDatabase::class.java,
+                DB_NAME,
+            ).fallbackToDestructiveMigration().build()
+            //    INSTANCE = instance
+            //    instance
+            // }
         }
     }
+
 }

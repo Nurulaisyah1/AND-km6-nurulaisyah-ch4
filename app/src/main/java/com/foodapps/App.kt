@@ -1,22 +1,20 @@
 package com.foodapps
 
 import android.app.Application
-import android.util.Log
-import com.foodapps.data.source.local.database.AppDatabase
-import com.google.firebase.FirebaseApp
-import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.foodapps.data.di.AppModules
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
+
 
 class App : Application() {
     override fun onCreate() {
         super.onCreate()
-
-        // Initialize AppDatabase
-        AppDatabase.getInstance(this)
-
-        // Initialize FirebaseApp
-        FirebaseApp.initializeApp(this)
-
-        // Enable Crashlytics
-        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true)
+        startKoin {
+            androidLogger()
+            androidContext(this@App)
+            modules(AppModules.modules)
+        }
     }
+
 }

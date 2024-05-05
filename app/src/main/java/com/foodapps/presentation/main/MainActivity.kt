@@ -4,20 +4,25 @@ import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.foodapps.R
 import com.foodapps.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.crashlytics.FirebaseCrashlytics
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var auth: FirebaseAuth
 
+
+    private val mainViewModel: MainViewModel by viewModel()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         // Enable edge-to-edge display
         enableEdgeToEdge()
@@ -28,19 +33,15 @@ class MainActivity : AppCompatActivity() {
         // Initialize Firebase Authentication
         auth = FirebaseAuth.getInstance()
 
-
-        // Inflate layout using view binding
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
         // Initialize Firebase Crashlytics
-        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true)
+        // FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true)
 
         // Check if the user is already logged in
         if (!userIsLoggedIn()) {
-            // If logged in, navigate to home fragment
+            // If not logged in, navigate to home fragment
             navigateToHomeFragment()
         } else {
+            // If logged in, setup bottom navigation
             setupBottomNav()
         }
     }
@@ -51,12 +52,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun navigateToHomeFragment() {
-        val navController = findNavController(R.id.nav_host_fragment_activity_main)
+        // Navigate to the home fragment using NavController
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
+
+
+        val navController = navHostFragment.navController
         navController.navigate(R.id.menu_tab_home)
     }
 
     private fun setupBottomNav() {
-        val navController = findNavController(R.id.nav_host_fragment_activity_main)
+        // Set up bottom navigation using Navigation Component
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
+
+
+        val navController = navHostFragment.navController
         binding.navView.setupWithNavController(navController)
     }
 }

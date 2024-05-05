@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.foodapps.databinding.FragmentProfileBinding
-import com.foodapps.presentation.login.LoginActivity
+import com.foodapps.presentation.auth.login.LoginActivity
 import com.google.firebase.auth.FirebaseAuth
 
 class ProfileFragment : Fragment() {

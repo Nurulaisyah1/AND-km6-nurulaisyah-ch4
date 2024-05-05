@@ -84,4 +84,8 @@
     <string name="create_order_success">vreate order success</string>
     <string name="close">close\n</string>
     <string name="error_checkout">cekhout_eror\n</string>
+    <string name="login_failed_">LOGIN FAILED</string>
+    <string name="register_successfully">Register Successfully</string>
+    <string name="txt_password_failed">Password tidak sama</string>
+    <string name="txt_password_failed2">Kolom tidak boleh kosong</string>
 </resources>

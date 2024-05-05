@@ -1,6 +1,6 @@
 [versions]
-agp = "8.3.0"
-firebaseCrashlyticsGradle = "2.9.9"
+kotlinParcelize = "1.9.0"
+agp = "8.3.1"
 kotlin = "1.9.0"
 coreKtx = "1.12.0"
 junit = "4.13.2"
@@ -8,28 +8,35 @@ junitVersion = "1.1.5"
 espressoCore = "3.5.1"
 appcompat = "1.6.1"
 material = "1.11.0"
-activity = "1.8.2"
+activity = "1.8.0"
 constraintlayout = "2.1.4"
+
 coil = "2.6.0"
 lifecycle = "2.7.0"
 fragment-ktx = "1.6.2"
 navigationFragmentKtx = "2.7.7"
 navigationUiKtx = "2.7.7"
+
+circleImageView = "3.1.0"
+
 room = "2.6.1"
 ksp = "1.9.10-1.0.13"
-coroutine = "1.8.0"
-retrofit = "2.11.0"
-okhttp = "4.12.0"
-annotation = "1.7.1"
-firebaseCrashlyticsKtx = "18.6.4"
+coroutine = "1.7.3"
+
+retrofit = "2.9.0"
+okhttp = "4.11.0"
 googleServices = "4.4.1"
 firebaseAuth = "22.3.1"
-koin = " 3.5.6"
+firebaseCrashlytics = "18.6.3"
+gradle = "8.1.0"
+firebaseCrashlyticsGradle = "2.9.9"
 
+koin = "3.5.6"
+
+ktlint = "12.1.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
-firebase-crashlytics-gradle = { module = "com.google.firebase:firebase-crashlytics-gradle", version.ref = "firebaseCrashlyticsGradle" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -37,6 +44,7 @@ androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+
 # coil image loader
 coil = { group = "io.coil-kt", name = "coil", version.ref = "coil" }
 
@@ -52,6 +60,9 @@ fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", version.ref
 androidx-navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
 androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigationUiKtx" }
 
+# rounded image
+hdodendof-circle-image-view = {group = "de.hdodenhof", name = "circleimageview", version.ref = "circleImageView"}
+
 # room
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
@@ -64,16 +75,19 @@ coroutine-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutine
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
-androidx-annotation = { group = "androidx.annotation", name = "annotation", version.ref = "annotation" }
-firebase-crashlytics-ktx = { group = "com.google.firebase", name = "firebase-crashlytics-ktx", version.ref = "firebaseCrashlyticsKtx" }
+okhttp-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref="okhttp"}
 google-services = { group = "com.google.gms", name = "google-services", version.ref = "googleServices" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
+firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics", version.ref = "firebaseCrashlytics" }
+gradle = { group = "com.android.tools.build", name = "gradle", version.ref = "gradle" }
+firebase-crashlytics-gradle = { group = "com.google.firebase", name = "firebase-crashlytics-gradle", version.ref = "firebaseCrashlyticsGradle" }
 
 #koin
-koin-android = { group = "io-insert-koin", name = "koin-android", version.ref = "koin" }
+koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin"}
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
-
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
