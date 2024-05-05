@@ -78,7 +78,6 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.room.ktx)
-    implementation(libs.firebase.crashlytics.ktx)
     implementation(libs.firebase.auth)
     ksp(libs.room.compiler)
     implementation(libs.coroutine.core)
@@ -88,13 +87,11 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    implementation ("com.github.bumptech.glide:glide:4.16.0")
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    implementation("com.google.firebase:firebase-auth:21.0.1.")
+    implementation("io.insert-koin:koin-android:3.5.6")
+
     implementation(libs.koin.android)
-
-
-
-
-
 
 
 }

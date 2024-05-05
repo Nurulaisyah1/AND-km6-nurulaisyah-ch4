@@ -1,8 +1,11 @@
 package  com.foodapps.presentation.splashscreen
+import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.foodapps.databinding.ActivitySplashBinding
+import com.foodapps.presentation.main.MainActivity
 import com.foodapps.utils.GenericViewModelFactory
 
 class SplashActivity : AppCompatActivity() {
@@ -26,9 +29,9 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun checkIfUserLogin() {
-        //todo : check user login
-        //if not login yet, navigate to login page
-        //if already login, navigate to main
+        Handler().postDelayed({
+            startActivity(Intent(this,MainActivity::class.java))
+        },1500)
     }
 
 

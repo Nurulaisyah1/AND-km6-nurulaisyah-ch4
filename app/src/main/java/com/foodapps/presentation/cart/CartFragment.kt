@@ -2,6 +2,7 @@ package com.foodapps.presentation.cart
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,18 +24,22 @@ import com.foodapps.utils.GenericViewModelFactory
 import com.foodapps.utils.hideKeyboard
 import com.foodapps.utils.proceedWhen
 import com.foodapps.utils.toDollarFormat
+import com.google.firebase.auth.FirebaseAuth
+import org.koin.android.ext.android.inject
+
 
 class CartFragment : Fragment() {
 
     private lateinit var binding: FragmentCartBinding
 
+    private val auth : FirebaseAuth by inject()
+
     private val viewModel: CartViewModel by viewModels {
-        val db = AppDatabase.getInstance(requireContext())
+        val db = AppDatabase.createInstance(requireContext())
         val ds: CartDataSource = CartDatabaseDataSource(db.cartDao())
         val rp: CartRepository = CartRepositoryImpl(ds)
         GenericViewModelFactory.create(CartViewModel(rp))
     }
-
     private val adapter: CartListAdapter by lazy {
         CartListAdapter(object : CartListener {
             override fun onPlusTotalItemCartClicked(cart: Cart) {
@@ -57,11 +62,11 @@ class CartFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-
         binding = FragmentCartBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
@@ -71,6 +76,11 @@ class CartFragment : Fragment() {
         setupList()
         observeData()
         setClickListeners()
+        getUser()
+    }
+    private fun getUser() {
+        val user = auth.getCurrentUser()
+        Log.d("AUTH", "getUser: FROM CART ${auth.hashCode()} user hash = ${user.hashCode()}")
     }
 
     private fun setClickListeners() {
@@ -78,7 +88,6 @@ class CartFragment : Fragment() {
             startActivity(Intent(requireContext(), CheckoutActivity::class.java))
         }
     }
-
     private fun observeData() {
         viewModel.getAllCarts().observe(viewLifecycleOwner) { result ->
             result.proceedWhen(
@@ -123,4 +132,5 @@ class CartFragment : Fragment() {
     private fun setupList() {
         binding.rvCart.adapter = this@CartFragment.adapter
     }
+
 }

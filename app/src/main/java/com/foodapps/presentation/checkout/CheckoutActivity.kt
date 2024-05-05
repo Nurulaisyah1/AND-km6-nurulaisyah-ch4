@@ -7,22 +7,21 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.foodapps.R
-import com.foodapps.data.datasource.menu.MenuDataSource
 import com.foodapps.data.datasource.cart.CartDataSource
 import com.foodapps.data.datasource.cart.CartDatabaseDataSource
 import com.foodapps.data.datasource.menu.MenuApiDataSource
-import com.foodapps.data.repository.CartRepositoryImpl
-import com.foodapps.databinding.ActivityCheckoutBinding
-import com.foodapps.utils.GenericViewModelFactory
-import com.foodapps.utils.proceedWhen
-
+import com.foodapps.data.datasource.menu.MenuDataSource
 import com.foodapps.data.network.services.FoodAppApiService
 import com.foodapps.data.repository.CartRepository
+import com.foodapps.data.repository.CartRepositoryImpl
 import com.foodapps.data.repository.MenuRepository
 import com.foodapps.data.repository.MenuRepositoryImpl
 import com.foodapps.data.source.local.database.AppDatabase
+import com.foodapps.databinding.ActivityCheckoutBinding
 import com.foodapps.presentation.checkout.adapter.PriceListAdapter
 import com.foodapps.presentation.common.adapter.CartListAdapter
+import com.foodapps.utils.GenericViewModelFactory
+import com.foodapps.utils.proceedWhen
 import com.foodapps.utils.toDollarFormat
 
 class CheckoutActivity : AppCompatActivity() {
@@ -32,7 +31,7 @@ class CheckoutActivity : AppCompatActivity() {
     }
 
     private val viewModel: CheckoutViewModel by viewModels {
-        val db = AppDatabase.getInstance(this)
+        val db = AppDatabase.createInstance(this)
         val s = FoodAppApiService.invoke()
         val mds: MenuDataSource = MenuApiDataSource(s)
         val mr: MenuRepository = MenuRepositoryImpl(mds)

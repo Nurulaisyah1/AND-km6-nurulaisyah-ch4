@@ -1,25 +1,19 @@
 package com.foodapps.presentation.detailmenu
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import coil.load
 import com.foodapps.R
-import com.foodapps.data.datasource.cart.CartDataSource
-import com.foodapps.data.datasource.cart.CartDatabaseDataSource
 import com.foodapps.data.model.Menu
-import com.foodapps.data.repository.CartRepository
-import com.foodapps.data.repository.CartRepositoryImpl
-import com.foodapps.data.source.local.database.AppDatabase
 import com.foodapps.databinding.ActivityDetailMenuBinding
-import com.foodapps.presentation.cart.isUserLoggedIn
-import com.foodapps.utils.GenericViewModelFactory
+import com.foodapps.presentation.auth.login.LoginActivity
 import com.foodapps.utils.proceedWhen
 import com.foodapps.utils.toDollarFormat
 import com.google.firebase.auth.FirebaseAuth
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 class DetailMenuActivity : AppCompatActivity() {
     private val binding: ActivityDetailMenuBinding by lazy {
@@ -27,13 +21,8 @@ class DetailMenuActivity : AppCompatActivity() {
     }
     private lateinit var auth: FirebaseAuth
 
-    private val viewModel: DetailMenuViewModel by viewModels {
-        val db = AppDatabase.getInstance(this)
-        val ds: CartDataSource = CartDatabaseDataSource(db.cartDao())
-        val rp: CartRepository = CartRepositoryImpl(ds)
-        GenericViewModelFactory.create(
-            DetailMenuViewModel(intent?.extras, rp)
-        )
+    private val detailViewModel: DetailMenuViewModel by viewModel {
+        parametersOf(intent.extras)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,35 +30,34 @@ class DetailMenuActivity : AppCompatActivity() {
         setContentView(binding.root)
         auth = FirebaseAuth.getInstance()
         auth.signOut()
-        bindMenu(viewModel.menu)
+        bindMenu(detailViewModel.menu)
         setClickListener()
         observeData()
     }
 
     private fun setClickListener() {
         binding.btnBack.setOnClickListener {
-            onBackPressed()
+            onBackPressedDispatcher.onBackPressed()
         }
         binding.ivMinus.setOnClickListener {
-            viewModel.minus()
+            detailViewModel.minus()
         }
         binding.ivPlus.setOnClickListener {
-            viewModel.add()
+            detailViewModel.add()
         }
-
 
         binding.btnAddToCart.setOnClickListener {
-            if (isUserLoggedIn()) {
+            if (!isUserLoggedIn()) {
                 addMenuToCart()
             } else {
-                Toast.makeText(this, "Harus login dulu", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
             }
         }
-
     }
 
     private fun addMenuToCart() {
-        viewModel.addToCart().observe(this) {
+        detailViewModel.addToCart().observe(this) {
             it.proceedWhen(
                 doOnSuccess = {
                     Toast.makeText(
@@ -101,28 +89,23 @@ class DetailMenuActivity : AppCompatActivity() {
         }
     }
 
-    private fun userIsLoggedIn(): Boolean {
+    private fun isUserLoggedIn(): Boolean {
         // Check if the current user is authenticated
         return auth.currentUser != null
     }
 
-
     private fun observeData() {
-        viewModel.priceLiveData.observe(this) {
+        detailViewModel.priceLiveData.observe(this) {
             binding.btnAddToCart.isEnabled = it != 0.0
             binding.tvCalculatedMenuPrice.text = it.toDollarFormat()
         }
-        viewModel.menuCountLiveData.observe(this) {
+        detailViewModel.menuCountLiveData.observe(this) {
             binding.tvMenuCount.text = it.toString()
         }
     }
 
     companion object {
-        const val EXRA_MENU = "EXRA_MENU"
-        fun startActivity(context: Context, menu: Menu) {
-            val intent = Intent(context, DetailMenuActivity::class.java)
-            intent.putExtra(EXRA_MENU, menu)
-            context.startActivity(intent)
-        }
+        const val EXTRA_ITEM = "EXTRA_ITEM"
     }
 }
+

@@ -1,25 +1,28 @@
 package com.foodapps.data.source.local
 
-import android.content.Context
-import com.foodapps.utils.SharedPreferenceUtils
+import android.content.ContentValues.TAG
+import android.content.SharedPreferences
+import android.util.Log
 
 interface UserPreference {
-    fun isUsingDarkMode(): Boolean
-    fun setUsingDarkMode(isUsingDarkMode: Boolean)
+    fun isUsingGridMode(): Boolean
+
+    fun setUsingGridMode(isUsingGridMode: Boolean)
 }
 
-class UserPreferenceImpl(private val context: Context) : UserPreference {
-
-    private val pref = SharedPreferenceUtils.createPreference(context, PREF_NAME)
-
-    override fun isUsingDarkMode(): Boolean = pref.getBoolean(KEY_IS_USING_DARK_MODE, false)
-
-    override fun setUsingDarkMode(isUsingDarkMode: Boolean) {
-        pref.edit().putBoolean(KEY_IS_USING_DARK_MODE, isUsingDarkMode).apply()
-    }
-
+class UserPreferenceImpl(private val pref: SharedPreferences) : UserPreference {
     companion object {
-        const val PREF_NAME = "FoodApps-pref"
-        const val KEY_IS_USING_DARK_MODE = "KEY_IS_USING_DARK_MODE"
+        const val KEY_IS_USING_GRID_MODE = "KEY_IS_USING_GRID_MODE"
+        const val PREF_NAME = "FoodApps-pref"// Define the constant here
+    }
+
+    override fun isUsingGridMode(): Boolean {
+        return pref.getBoolean(KEY_IS_USING_GRID_MODE, false)
+    }
+
+    override fun setUsingGridMode(isUsingGridMode: Boolean) {
+        pref.edit().putBoolean(KEY_IS_USING_GRID_MODE, isUsingGridMode).apply()
+        Log.e(TAG, "Saving value user pref $isUsingGridMode")
     }
 }
+
