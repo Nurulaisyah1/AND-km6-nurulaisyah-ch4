@@ -1,6 +1,5 @@
 package com.foodapps.data.source.local.database
 
-
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
@@ -11,7 +10,7 @@ import com.foodapps.data.source.local.database.entity.CartEntity
 @Database(
     entities = [CartEntity::class],
     version = 1,
-    exportSchema = true
+    exportSchema = true,
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun cartDao(): CartDao
@@ -21,16 +20,17 @@ abstract class AppDatabase : RoomDatabase() {
 
         @Volatile
         private var INSTANCE: AppDatabase? = null
+
         fun getInstance(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
-
                 val appContext = context.applicationContext
-                val instance = Room.databaseBuilder(
-                    appContext,
-                    AppDatabase::class.java,
-                    DB_NAME
-                ).fallbackToDestructiveMigration()
-                    .build()
+                val instance =
+                    Room.databaseBuilder(
+                        appContext,
+                        AppDatabase::class.java,
+                        DB_NAME,
+                    ).fallbackToDestructiveMigration()
+                        .build()
                 INSTANCE = instance
                 instance
             } ?: throw IllegalStateException("Database instance creation failed")

@@ -25,7 +25,6 @@ import com.foodapps.utils.proceedWhen
 import com.foodapps.utils.toDollarFormat
 
 class CartFragment : Fragment() {
-
     private lateinit var binding: FragmentCartBinding
 
     private val viewModel: CartViewModel by viewModels {
@@ -36,29 +35,32 @@ class CartFragment : Fragment() {
     }
 
     private val adapter: CartListAdapter by lazy {
-        CartListAdapter(object : CartListener {
-            override fun onPlusTotalItemCartClicked(cart: Cart) {
-                viewModel.increaseCart(cart)
-            }
+        CartListAdapter(
+            object : CartListener {
+                override fun onPlusTotalItemCartClicked(cart: Cart) {
+                    viewModel.increaseCart(cart)
+                }
 
-            override fun onMinusTotalItemCartClicked(cart: Cart) {
-                viewModel.decreaseCart(cart)
-            }
+                override fun onMinusTotalItemCartClicked(cart: Cart) {
+                    viewModel.decreaseCart(cart)
+                }
 
-            override fun onRemoveCartClicked(cart: Cart) {
-                viewModel.removeCart(cart)
-            }
+                override fun onRemoveCartClicked(cart: Cart) {
+                    viewModel.removeCart(cart)
+                }
 
-            override fun onUserDoneEditingNotes(cart: Cart) {
-                viewModel.setCartNotes(cart)
-                hideKeyboard()
-            }
-        })
+                override fun onUserDoneEditingNotes(cart: Cart) {
+                    viewModel.setCartNotes(cart)
+                    hideKeyboard()
+                }
+            },
+        )
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View {
         // Inflate the layout for this fragment
 
@@ -66,7 +68,10 @@ class CartFragment : Fragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         setupList()
         observeData()
@@ -94,7 +99,7 @@ class CartFragment : Fragment() {
                     binding.layoutState.tvError.isVisible = false
                     binding.rvCart.isVisible = true
                     result.payload?.let { (carts, totalPrice) ->
-                        //set list cart data
+                        // set list cart data
                         adapter.submitData(carts)
                         binding.tvTotalPrice.text = totalPrice.toDollarFormat()
                     }
@@ -115,7 +120,7 @@ class CartFragment : Fragment() {
                     result.payload?.let { (carts, totalPrice) ->
                         binding.tvTotalPrice.text = totalPrice.toDollarFormat()
                     }
-                }
+                },
             )
         }
     }

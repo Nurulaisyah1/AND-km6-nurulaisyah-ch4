@@ -12,7 +12,6 @@ import com.foodapps.utils.GenericViewModelFactory
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity() {
-
     private val binding: ActivityLoginBinding by lazy {
         ActivityLoginBinding.inflate(layoutInflater)
     }
@@ -35,26 +34,25 @@ class LoginActivity : AppCompatActivity() {
         doLogin()
     }
 
-
-    private fun doLogin(){
+    private fun doLogin()  {
         binding.loginButton.setOnClickListener {
             val email = binding.emailEditText.text.toString()
             val password = binding.passwordEditText.text.toString()
             auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
-                        startActivity(Intent(this,MainActivity::class.java).also {
-                            Toast.makeText(this, "Login Successfully", Toast.LENGTH_SHORT).show()
-                            finish()
-                        })
-
+                        startActivity(
+                            Intent(this, MainActivity::class.java).also {
+                                Toast.makeText(this, "Login Successfully", Toast.LENGTH_SHORT).show()
+                                finish()
+                            },
+                        )
                     } else {
                         // Gagal login
                         // Tangani kesalahan, misalnya, tampilkan pesan kesalahan
                         Toast.makeText(this, "Login failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                     }
                 }
-
         }
     }
 
@@ -69,5 +67,4 @@ class LoginActivity : AppCompatActivity() {
         val intent = Intent(this, RegisterActivity::class.java)
         startActivity(intent) // Memulai activity baru
     }
-
 }

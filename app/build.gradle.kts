@@ -27,7 +27,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }
@@ -51,14 +51,14 @@ android {
             buildConfigField(
                 type = "String",
                 name = "BASE_URL",
-                value = "\"https://api-restaurant.binaracademy.org/\""
+                value = "\"https://api-restaurant.binaracademy.org/\"",
             )
         }
         create("integration") {
             buildConfigField(
                 type = "String",
                 name = "BASE_URL",
-                value = "\"https://api-restaurant.binaracademy.org/\""
+                value = "\"https://api-restaurant.binaracademy.org/\"",
             )
         }
     }
@@ -106,17 +106,15 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    implementation ("com.github.bumptech.glide:glide:4.16.0")
+    testImplementation("junit:junit:4.12")
+    implementation("com.github.bumptech.glide:glide:4.16.0")
     androidTestImplementation(libs.mockk.android)
     testImplementation(libs.mockk.agent)
     testImplementation(libs.coroutine.test)
     testImplementation(libs.turbine)
     testImplementation(libs.core.testing)
 
-
-
-
-
-
-
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
 }

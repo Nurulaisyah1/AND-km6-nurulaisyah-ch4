@@ -12,7 +12,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 
 class MainActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityMainBinding
     private lateinit var auth: FirebaseAuth
 
@@ -27,7 +26,6 @@ class MainActivity : AppCompatActivity() {
 
         // Initialize Firebase Authentication
         auth = FirebaseAuth.getInstance()
-
 
         // Inflate layout using view binding
         binding = ActivityMainBinding.inflate(layoutInflater)

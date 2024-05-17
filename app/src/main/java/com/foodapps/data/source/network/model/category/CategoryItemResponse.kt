@@ -1,6 +1,5 @@
 package com.foodapps.data.source.network.model.category
 
-
 import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
@@ -13,5 +12,5 @@ data class CategoryItemResponse(
     @SerializedName("nama")
     val name: String?,
     @SerializedName("slug")
-    val slug: String?
+    val slug: String?,
 )

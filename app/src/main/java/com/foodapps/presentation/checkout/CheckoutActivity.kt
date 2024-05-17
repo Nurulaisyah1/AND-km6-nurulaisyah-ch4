@@ -7,26 +7,24 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.foodapps.R
-import com.foodapps.data.datasource.menu.MenuDataSource
 import com.foodapps.data.datasource.cart.CartDataSource
 import com.foodapps.data.datasource.cart.CartDatabaseDataSource
 import com.foodapps.data.datasource.menu.MenuApiDataSource
-import com.foodapps.data.repository.CartRepositoryImpl
-import com.foodapps.databinding.ActivityCheckoutBinding
-import com.foodapps.utils.GenericViewModelFactory
-import com.foodapps.utils.proceedWhen
-
+import com.foodapps.data.datasource.menu.MenuDataSource
 import com.foodapps.data.network.services.FoodAppApiService
 import com.foodapps.data.repository.CartRepository
+import com.foodapps.data.repository.CartRepositoryImpl
 import com.foodapps.data.repository.MenuRepository
 import com.foodapps.data.repository.MenuRepositoryImpl
 import com.foodapps.data.source.local.database.AppDatabase
+import com.foodapps.databinding.ActivityCheckoutBinding
 import com.foodapps.presentation.checkout.adapter.PriceListAdapter
 import com.foodapps.presentation.common.adapter.CartListAdapter
+import com.foodapps.utils.GenericViewModelFactory
+import com.foodapps.utils.proceedWhen
 import com.foodapps.utils.toDollarFormat
 
 class CheckoutActivity : AppCompatActivity() {
-
     private val binding: ActivityCheckoutBinding by lazy {
         ActivityCheckoutBinding.inflate(layoutInflater)
     }
@@ -46,7 +44,6 @@ class CheckoutActivity : AppCompatActivity() {
     }
     private val priceItemAdapter: PriceListAdapter by lazy {
         PriceListAdapter {
-
         }
     }
 
@@ -68,13 +65,15 @@ class CheckoutActivity : AppCompatActivity() {
     }
 
     private fun showSuccessDialog() {
-        val dialog = AlertDialog.Builder(this)
-            .setTitle(getString(R.string.create_order_success))
-            .setPositiveButton(getString(R.string.close)) { _, _ ->
-                finish()
-            }
+        val dialog =
+            AlertDialog.Builder(this)
+                .setTitle(getString(R.string.create_order_success))
+                .setPositiveButton(getString(R.string.close)) { _, _ ->
+                    finish()
+                }
         dialog.show()
     }
+
     private fun doCheckout() {
         viewModel.checkoutCart().observe(this) {
             it.proceedWhen(
@@ -99,15 +98,15 @@ class CheckoutActivity : AppCompatActivity() {
                     binding.layoutState.pbLoading.isVisible = false
                     binding.layoutContent.root.isVisible = false
                     binding.layoutContent.rvCart.isVisible = false
-                    Toast.makeText(this,
+                    Toast.makeText(
+                        this,
                         getString(R.string.error_checkout),
-                        Toast.LENGTH_SHORT).show()
-                }
+                        Toast.LENGTH_SHORT,
+                    ).show()
+                },
             )
         }
     }
-
-
 
     private fun setupList() {
         binding.layoutContent.rvCart.adapter = adapter
@@ -158,4 +157,3 @@ class CheckoutActivity : AppCompatActivity() {
         }
     }
 }
-

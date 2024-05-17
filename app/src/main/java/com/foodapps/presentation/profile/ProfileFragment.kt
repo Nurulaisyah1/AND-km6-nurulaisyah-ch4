@@ -13,21 +13,24 @@ import com.foodapps.presentation.login.LoginActivity
 import com.google.firebase.auth.FirebaseAuth
 
 class ProfileFragment : Fragment() {
-
     private lateinit var binding: FragmentProfileBinding
     private val viewModel: ProfileViewModel by viewModels()
     private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View {
         // Inflate the layout for this fragment
         binding = FragmentProfileBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         setClickListener()
         observeEditMode()
@@ -37,12 +40,12 @@ class ProfileFragment : Fragment() {
     private fun observeProfileData() {
         Glide.with(binding.root).load("https://github.com/Nurulaisyah1/Food_Asset/blob/main/img_discount.jpg").into(binding.ivProfile)
         val user = FirebaseAuth.getInstance().currentUser
-       if(user != null){
-           binding.emailEditText.setText(user.email)
-           binding.nameEditText.setText(user.displayName)
-           binding.usernameEditText.setText(user.uid)
-       }
-
+        if (user != null)
+            {
+                binding.emailEditText.setText(user.email)
+                binding.nameEditText.setText(user.displayName)
+                binding.usernameEditText.setText(user.uid)
+            }
     }
 
     private fun setClickListener() {

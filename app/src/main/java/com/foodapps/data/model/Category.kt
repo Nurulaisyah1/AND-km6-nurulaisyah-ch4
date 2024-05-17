@@ -6,5 +6,4 @@ data class Category(
     var name: String,
     var imgUrl: String,
     var slug: String, // properti slug
-
 )

@@ -6,6 +6,6 @@ import com.foodapps.data.network.model.menus.MenuResponse
 
 interface MenuDataSource {
     suspend fun getMenus(categorySlug: String?): MenuResponse
-    suspend fun createOrder(payload: CheckoutRequestPayload): CheckoutResponse
 
+    suspend fun createOrder(payload: CheckoutRequestPayload): CheckoutResponse
 }

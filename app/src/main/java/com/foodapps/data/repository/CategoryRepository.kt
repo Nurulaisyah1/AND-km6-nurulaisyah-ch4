@@ -7,15 +7,12 @@ import com.foodapps.utils.ResultWrapper
 import com.foodapps.utils.proceedFlow
 import kotlinx.coroutines.flow.Flow
 
-
-
-
 interface CategoryRepository {
     fun getCategories(): Flow<ResultWrapper<List<Category>>>
 }
 
 class CategoryRepositoryImpl(
-    private val dataSource: CategoryDataSource
+    private val dataSource: CategoryDataSource,
 ) : CategoryRepository {
     override fun getCategories(): Flow<ResultWrapper<List<Category>>> {
         return proceedFlow { dataSource.getCategories().data.toCategories() }

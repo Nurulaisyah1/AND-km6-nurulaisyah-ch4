@@ -1,7 +1,6 @@
 package com.foodapps
 
 import android.app.Application
-import android.util.Log
 import com.foodapps.data.source.local.database.AppDatabase
 import com.google.firebase.FirebaseApp
 import com.google.firebase.crashlytics.FirebaseCrashlytics

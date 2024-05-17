@@ -3,7 +3,6 @@ package com.foodapps.data.mapper
 import com.foodapps.data.model.Menu
 import com.foodapps.data.source.network.model.menus.MenuItemResponse
 
-
 fun MenuItemResponse?.toMenus() =
     Menu(
         id = this?.id.orEmpty(),
@@ -11,9 +10,10 @@ fun MenuItemResponse?.toMenus() =
         price = this?.price ?: 0.0,
         imgUrl = this?.imgUrl.orEmpty(),
         detail = this?.description.orEmpty(),
-        address = this?.address.orEmpty()
+        address = this?.address.orEmpty(),
     )
 
-fun Collection<MenuItemResponse>?.toMenus() = this?.map {
-    it.toMenus()
-} ?: listOf()
+fun Collection<MenuItemResponse>?.toMenus() =
+    this?.map {
+        it.toMenus()
+    } ?: listOf()

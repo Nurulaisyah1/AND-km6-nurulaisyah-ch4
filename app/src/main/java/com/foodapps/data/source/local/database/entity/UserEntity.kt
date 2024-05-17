@@ -7,7 +7,6 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "users")
 data class UserEntity(
     @PrimaryKey(autoGenerate = true)
-
     @ColumnInfo(name = "id") // Specify column name for the id property
     val id: Int = 0,
     @ColumnInfo(name = "username")
@@ -15,5 +14,5 @@ data class UserEntity(
     @ColumnInfo(name = "email")
     val email: String,
     @ColumnInfo(name = "password")
-    val password: String
+    val password: String,
 )

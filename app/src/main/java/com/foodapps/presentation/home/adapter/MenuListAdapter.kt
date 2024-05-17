@@ -14,40 +14,45 @@ import com.foodapps.utils.toDollarFormat
 class MenuListAdapter(
     private val menuList: List<Menu>,
     private var layoutManagerType: LayoutManagerType,
-    private val onItemClick: (Menu) -> Unit) :
+    private val onItemClick: (Menu) -> Unit,
+) :
     RecyclerView.Adapter<MenuListAdapter.ItemMenuViewHolder>() {
-
     private val dataDiffer =
         AsyncListDiffer(
             this,
             object : DiffUtil.ItemCallback<Menu>() {
                 override fun areItemsTheSame(
                     oldItem: Menu,
-                    newItem: Menu
+                    newItem: Menu,
                 ): Boolean {
                     return oldItem.id == newItem.id
                 }
 
                 override fun areContentsTheSame(
                     oldItem: Menu,
-                    newItem: Menu
+                    newItem: Menu,
                 ): Boolean {
                     return oldItem.hashCode() == newItem.hashCode()
                 }
-            }
+            },
         )
 
     fun submitData(data: List<Menu>) {
         dataDiffer.submitList(data)
     }
 
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemMenuViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): ItemMenuViewHolder {
         val binding = ItemMenuBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ItemMenuViewHolder(binding, onItemClick)
     }
 
-    override fun onBindViewHolder(holder: ItemMenuViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: ItemMenuViewHolder,
+        position: Int,
+    ) {
         holder.bindView(dataDiffer.currentList[position])
     }
 
@@ -55,16 +60,14 @@ class MenuListAdapter(
 
     inner class ItemMenuViewHolder(
         private val binding: ItemMenuBinding,
-        val itemClick: (Menu) -> Unit
+        val itemClick: (Menu) -> Unit,
     ) : RecyclerView.ViewHolder(binding.root) {
-
         fun bindView(item: Menu) {
             with(item) {
-               Glide.with(binding.root).load(imgUrl).into(binding.imageViewMenu)
+                Glide.with(binding.root).load(imgUrl).into(binding.imageViewMenu)
                 binding.TvMenuName.text = name
                 binding.TvMenuPrice.text = price.toDollarFormat()
                 itemView.setOnClickListener { itemClick(this) }
-
             }
         }
     }

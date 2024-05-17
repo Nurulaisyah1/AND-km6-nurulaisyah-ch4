@@ -10,7 +10,7 @@ import com.google.gson.reflect.TypeToken
 data class Item(
     val id: String,
     val name: String,
-    val price: Double
+    val price: Double,
 ) {
     fun addToCart(context: Context) {
         // Tambahkan logika untuk menambahkan item ke keranjang di sini
@@ -19,12 +19,13 @@ data class Item(
 
         // Mendapatkan daftar item yang sudah ada di keranjang
         val json = sharedPreferences.getString("cart_items", null)
-        val itemList: MutableList<Item> = if (json != null) {
-            val type = object : TypeToken<List<Item>>() {}.type
-            Gson().fromJson(json, type)
-        } else {
-            ArrayList()
-        }
+        val itemList: MutableList<Item> =
+            if (json != null) {
+                val type = object : TypeToken<List<Item>>() {}.type
+                Gson().fromJson(json, type)
+            } else {
+                ArrayList()
+            }
 
         // Menambahkan item baru ke daftar
         itemList.add(this)

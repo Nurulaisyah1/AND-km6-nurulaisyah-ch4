@@ -32,7 +32,7 @@ class DetailMenuActivity : AppCompatActivity() {
         val ds: CartDataSource = CartDatabaseDataSource(db.cartDao())
         val rp: CartRepository = CartRepositoryImpl(ds)
         GenericViewModelFactory.create(
-            DetailMenuViewModel(intent?.extras, rp)
+            DetailMenuViewModel(intent?.extras, rp),
         )
     }
 
@@ -57,7 +57,6 @@ class DetailMenuActivity : AppCompatActivity() {
             viewModel.add()
         }
 
-
         binding.btnAddToCart.setOnClickListener {
             if (isUserLoggedIn()) {
                 addMenuToCart()
@@ -65,7 +64,6 @@ class DetailMenuActivity : AppCompatActivity() {
                 Toast.makeText(this, "Harus login dulu", Toast.LENGTH_SHORT).show()
             }
         }
-
     }
 
     private fun addMenuToCart() {
@@ -74,7 +72,8 @@ class DetailMenuActivity : AppCompatActivity() {
                 doOnSuccess = {
                     Toast.makeText(
                         this,
-                        getString(R.string.text_add_to_cart_success), Toast.LENGTH_SHORT
+                        getString(R.string.text_add_to_cart_success),
+                        Toast.LENGTH_SHORT,
                     ).show()
                     finish()
                 },
@@ -84,7 +83,7 @@ class DetailMenuActivity : AppCompatActivity() {
                 },
                 doOnLoading = {
                     Toast.makeText(this, getString(R.string.loading), Toast.LENGTH_SHORT).show()
-                }
+                },
             )
         }
     }
@@ -106,7 +105,6 @@ class DetailMenuActivity : AppCompatActivity() {
         return auth.currentUser != null
     }
 
-
     private fun observeData() {
         viewModel.priceLiveData.observe(this) {
             binding.btnAddToCart.isEnabled = it != 0.0
@@ -119,7 +117,11 @@ class DetailMenuActivity : AppCompatActivity() {
 
     companion object {
         const val EXRA_MENU = "EXRA_MENU"
-        fun startActivity(context: Context, menu: Menu) {
+
+        fun startActivity(
+            context: Context,
+            menu: Menu,
+        ) {
             val intent = Intent(context, DetailMenuActivity::class.java)
             intent.putExtra(EXRA_MENU, menu)
             context.startActivity(intent)

@@ -6,7 +6,7 @@ import com.foodapps.data.network.model.menus.MenuResponse
 import com.foodapps.data.network.services.FoodAppApiService
 
 class MenuApiDataSource(
-    private val service: FoodAppApiService
+    private val service: FoodAppApiService,
 ) : MenuDataSource {
     override suspend fun getMenus(categorySlug: String?): MenuResponse {
         return service.getMenus(categorySlug)
@@ -16,5 +16,3 @@ class MenuApiDataSource(
         return service.createOrder(payload)
     }
 }
-
-

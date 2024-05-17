@@ -33,7 +33,6 @@ import com.foodapps.utils.Preferences
 import com.foodapps.utils.proceedWhen
 
 class HomeFragment : Fragment() {
-
     private lateinit var binding: FragmentHomeBinding
 
     private val viewModel: HomeViewModel by viewModels {
@@ -52,29 +51,43 @@ class HomeFragment : Fragment() {
     }
 
     private val menuAdapter: MenuListAdapter by lazy {
-        MenuListAdapter(mutableListOf(),if(Preferences.getLoggedStatus(requireActivity()))  LayoutManagerType.LINEAR_LAYOUT_MANAGER else  LayoutManagerType.GRID_LAYOUT_MANAGER) { menu ->
+        MenuListAdapter(
+            mutableListOf(),
+            if (Preferences.getLoggedStatus(
+                    requireActivity(),
+                )
+            ) {
+                LayoutManagerType.LINEAR_LAYOUT_MANAGER
+            } else {
+                LayoutManagerType.GRID_LAYOUT_MANAGER
+            },
+        ) { menu ->
             DetailMenuActivity.startActivity(requireContext(), menu)
         }
     }
 
     fun switchLayoutManager(layoutManagerType: LayoutManagerType) {
-        val layoutManager = when (layoutManagerType) {
-            LayoutManagerType.LINEAR_LAYOUT_MANAGER -> LinearLayoutManager(requireContext())
-            LayoutManagerType.GRID_LAYOUT_MANAGER -> GridLayoutManager(requireContext(), 2) // Sesuaikan jumlah kolom di sini
-        }
+        val layoutManager =
+            when (layoutManagerType) {
+                LayoutManagerType.LINEAR_LAYOUT_MANAGER -> LinearLayoutManager(requireContext())
+                LayoutManagerType.GRID_LAYOUT_MANAGER -> GridLayoutManager(requireContext(), 2) // Sesuaikan jumlah kolom di sini
+            }
         binding.rvProductList.layoutManager = layoutManager
     }
 
-
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         setupListMenu()
         setupListCategory()
@@ -83,17 +96,19 @@ class HomeFragment : Fragment() {
         Toast.makeText(requireContext(), "${Preferences.getLoggedStatus(requireActivity())}", Toast.LENGTH_SHORT).show()
         binding.btnSwitch.setOnClickListener {
             menuAdapter.notifyDataSetChanged()
-            Preferences.setLoggedStatus(requireActivity(),!Preferences.getLoggedStatus(requireActivity()))
+            Preferences.setLoggedStatus(requireActivity(), !Preferences.getLoggedStatus(requireActivity()))
 
-            if(Preferences.getLoggedStatus(requireActivity())){
-                switchLayoutManager(LayoutManagerType.LINEAR_LAYOUT_MANAGER)
-            }else{
-                switchLayoutManager(LayoutManagerType.GRID_LAYOUT_MANAGER)
-            }
+            if (Preferences.getLoggedStatus(requireActivity()))
+                {
+                    switchLayoutManager(LayoutManagerType.LINEAR_LAYOUT_MANAGER)
+                } else
+                {
+                    switchLayoutManager(LayoutManagerType.GRID_LAYOUT_MANAGER)
+                }
         }
 
         binding.layoutHeader.ivProfileHeaderHome.setOnClickListener {
-            startActivity(Intent(requireContext(),LoginActivity::class.java))
+            startActivity(Intent(requireContext(), LoginActivity::class.java))
         }
     }
 
@@ -107,9 +122,9 @@ class HomeFragment : Fragment() {
                     Toast.makeText(
                         requireContext(),
                         "$error ${error.message}",
-                        Toast.LENGTH_SHORT
+                        Toast.LENGTH_SHORT,
                     ).show()
-                }
+                },
             )
         }
     }
@@ -124,9 +139,9 @@ class HomeFragment : Fragment() {
                     Toast.makeText(
                         requireContext(),
                         "Failed to fetch menu list: ${error.message}",
-                        Toast.LENGTH_SHORT
+                        Toast.LENGTH_SHORT,
                     ).show()
-                }
+                },
             )
         }
     }
