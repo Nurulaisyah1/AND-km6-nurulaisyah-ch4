@@ -84,4 +84,5 @@
     <string name="create_order_success">vreate order success</string>
     <string name="close">close\n</string>
     <string name="error_checkout">cekhout_eror\n</string>
+    <string name="tv_add_to_cart">Add to Cart</string>
 </resources>
