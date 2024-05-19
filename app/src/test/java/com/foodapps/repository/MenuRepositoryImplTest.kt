@@ -1,4 +1,3 @@
-/*
 package com.foodapps.repository
 
 import app.cash.turbine.test
@@ -37,25 +36,23 @@ class MenuRepositoryImplTest {
 
     @Test
     fun `when get menu success`() {
-        val menu1 =
-            MenuItemResponse(
-                id = "asadasdsa",
-                name = "dfsdfsdf",
-                imgUrl  = "fsdfsdfsdf",
-                price  = 9.000,
-                description  = "adfadfsdfsf",
-                address = "asfsdfsdfd",
+        val menu1 = MenuItemResponse(
+            id = "asadasdsa",
+            name = "dfsdfsdf",
+            imgUrl = "fsdfsdfsdf",
+            price = 9.000,
+            description = "adfadfsdfsf",
+            address = "asfsdfsdfd",
 
             )
-        val menu2 =
-            MenuItemResponse(
-                id = "asadasdsa",
-                name = "dfsdfsdf",
-                imgUrl  = "fsdfsdfsdf",
-                price  = 9.000,
-                description  = "adfadfsdfsf",
-                address = "asfsdfsdfd",
-            )
+        val menu2 = MenuItemResponse(
+            id = "asadasdsa",
+            name = "dfsdfsdf",
+            imgUrl = "fsdfsdfsdf",
+            price = 9.000,
+            description = "adfadfsdfsf",
+            address = "asfsdfsdfd",
+        )
         val mockListCatalog = listOf(menu1, menu2)
         val mockResponse = mockk<MenuResponse>()
         every { mockResponse.data } returns mockListCatalog
@@ -75,24 +72,22 @@ class MenuRepositoryImplTest {
 
     @Test
     fun `when get menu loading`() {
-        val menu1 =
-            MenuItemResponse(
-                id = "asadasdsa",
-                name = "dfsdfsdf",
-                imgUrl  = "fsdfsdfsdf",
-                price  = 9.000,
-                description  = "adfadfsdfsf",
-                address = "asfsdfsdfd",
-            )
-        val menu2 =
-            MenuItemResponse(
-                id = "asadasdsa",
-                name = "dfsdfsdf",
-                imgUrl  = "fsdfsdfsdf",
-                price  = 9.000,
-                description  = "adfadfsdfsf",
-                address = "asfsdfsdfd",
-            )
+        val menu1 = MenuItemResponse(
+            id = "asadasdsa",
+            name = "dfsdfsdf",
+            imgUrl = "fsdfsdfsdf",
+            price = 9.000,
+            description = "adfadfsdfsf",
+            address = "asfsdfsdfd",
+        )
+        val menu2 = MenuItemResponse(
+            id = "asadasdsa",
+            name = "dfsdfsdf",
+            imgUrl = "fsdfsdfsdf",
+            price = 9.000,
+            description = "adfadfsdfsf",
+            address = "asfsdfsdfd",
+        )
         val mockListMenu = listOf(menu1, menu2)
         val mockResponse = mockk<MenuResponse>()
         every { mockResponse.data } returns mockListMenu
@@ -147,27 +142,26 @@ class MenuRepositoryImplTest {
 
     @Test
     fun `when create order success`() {
-        val mockCart =
-            listOf(
-                Cart(
-                    id = 1,
-                    menuId = "asdasdasd",
-                    menuName = "sdfsdf",
-                    menuImgUrl = "sdfsdfsd",
-                    menuPrice = 10000.0,
-                    itemQuantity = 2,
-                    itemNotes = "dfgdsfgsddfg",
-                ),
-                Cart(
-                    id = 2,
-                    menuId = "sdfsadfsadf",
-                    menuName = "dfgdfgd",
-                    menuImgUrl = "dsfgsadfsa",
-                    menuPrice = 20000.0,
-                    itemQuantity = 1,
-                    itemNotes = "sdfsdfsdf",
-                ),
-            )
+        val mockCart = listOf(
+            Cart(
+                id = 1,
+                menuId = "asdasdasd",
+                menuName = "sdfsdf",
+                menuImgUrl = "sdfsdfsd",
+                menuPrice = 10000.0,
+                itemQuantity = 2,
+                itemNotes = "dfgdsfgsddfg",
+            ),
+            Cart(
+                id = 2,
+                menuId = "sdfsadfsadf",
+                menuName = "dfgdfgd",
+                menuImgUrl = "dsfgsadfsa",
+                menuPrice = 20000.0,
+                itemQuantity = 1,
+                itemNotes = "sdfsdfsdf",
+            ),
+        )
         val totalPrice = 35
         val username = "binarian"
         val mockResponse = mockk<CheckoutResponse>(relaxed = true)
@@ -185,29 +179,27 @@ class MenuRepositoryImplTest {
         }
     }
 
-    @Test
     fun `when create order loading`() {
-        val mockCart =
-            listOf(
-                Cart(
-                    id = 1,
-                    menuId = "asdasdasd",
-                    menuName = "sdfsdf",
-                    menuImgUrl = "sdfsdfsd",
-                    menuPrice = 10000.0,
-                    itemQuantity = 2,
-                    itemNotes = "dfgdsfgsddfg",
-                ),
-                Cart(
-                    id = 2,
-                    menuId = "sdfsadfsadf",
-                    menuName = "dfgdfgd",
-                    menuImgUrl = "dsfgsadfsa",
-                    menuPrice = 20000.0,
-                    itemQuantity = 1,
-                    itemNotes = "sdfsdfsdf",
-                ),
-            )
+        val mockCart = listOf(
+            Cart(
+                id = 1,
+                menuId = "asdasdasd",
+                menuName = "sdfsdf",
+                menuImgUrl = "sdfsdfsd",
+                menuPrice = 10000.0,
+                itemQuantity = 2,
+                itemNotes = "dfgdsfgsddfg",
+            ),
+            Cart(
+                id = 2,
+                menuId = "sdfsadfsadf",
+                menuName = "dfgdfgd",
+                menuImgUrl = "dsfgsadfsa",
+                menuPrice = 20000.0,
+                itemQuantity = 1,
+                itemNotes = "sdfsdfsdf",
+            ),
+        )
         val totalPrice = 35
         val username = "binarian"
         val mockResponse = mockk<CheckoutResponse>(relaxed = true)
@@ -227,27 +219,26 @@ class MenuRepositoryImplTest {
 
     @Test
     fun `when create order error`() {
-        val mockCart =
-            listOf(
-                Cart(
-                    id = 1,
-                    menuId = "asdasdasd",
-                    menuName = "sdfsdf",
-                    menuImgUrl = "sdfsdfsd",
-                    menuPrice = 10000.0,
-                    itemQuantity = 2,
-                    itemNotes = "dfgdsfgsddfg",
-                ),
-                Cart(
-                    id = 2,
-                    menuId = "sdfsadfsadf",
-                    menuName = "dfgdfgd",
-                    menuImgUrl = "dsfgsadfsa",
-                    menuPrice = 20000.0,
-                    itemQuantity = 1,
-                    itemNotes = "sdfsdfsdf",
-                ),
-            )
+        val mockCart = listOf(
+            Cart(
+                id = 1,
+                menuId = "asdasdasd",
+                menuName = "sdfsdf",
+                menuImgUrl = "sdfsdfsd",
+                menuPrice = 10000.0,
+                itemQuantity = 2,
+                itemNotes = "dfgdsfgsddfg",
+            ),
+            Cart(
+                id = 2,
+                menuId = "sdfsadfsadf",
+                menuName = "dfgdfgd",
+                menuImgUrl = "dsfgsadfsa",
+                menuPrice = 20000.0,
+                itemQuantity = 1,
+                itemNotes = "sdfsdfsdf",
+            ),
+        )
         val totalPrice = 35
         val username = "binarian"
         runTest {
@@ -264,4 +255,3 @@ class MenuRepositoryImplTest {
         }
     }
 }
-*/

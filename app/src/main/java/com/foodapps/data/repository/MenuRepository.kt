@@ -4,7 +4,7 @@ import com.foodapps.data.datasource.menu.MenuDataSource
 import com.foodapps.data.mapper.toMenus
 import com.foodapps.data.model.Cart
 import com.foodapps.data.model.Menu
-import com.foodapps.data.network.model.checkout.CheckoutItemPayload
+import com.foodapps.data.network.model.CheckoutItemPayload
 import com.foodapps.data.network.model.checkout.CheckoutRequestPayload
 import com.foodapps.utils.ResultWrapper
 import com.foodapps.utils.proceedFlow
@@ -13,8 +13,11 @@ import kotlinx.coroutines.flow.Flow
 interface MenuRepository {
     fun getMenus(categorySlug: String? = null): Flow<ResultWrapper<List<Menu>>>
 
-    fun createOrder(products: List<Cart>): Flow<ResultWrapper<Boolean>>
-}
+    fun createOrder(
+        profile: String,
+        cart: List<Cart>,
+        totalPrice: Int,
+    ): Flow<ResultWrapper<Boolean>>}
 
 class MenuRepositoryImpl(
     private val dataSource: MenuDataSource,
@@ -25,20 +28,27 @@ class MenuRepositoryImpl(
         }
     }
 
-    override fun createOrder(products: List<Cart>): Flow<ResultWrapper<Boolean>> {
+    override fun createOrder(
+        profile: String,
+        cart: List<Cart>,
+        totalPrice: Int,
+    ): Flow<ResultWrapper<Boolean>> {
         return proceedFlow {
             dataSource.createOrder(
                 CheckoutRequestPayload(
+                    username = profile,
                     orders =
-                        products.map {
+                        cart.map {
                             CheckoutItemPayload(
-                                notes = it.itemNotes,
-                                productId = it.menuId.orEmpty(),
-                                quantity = it.itemQuantity,
+                                name = it.menuName,
+                                priceItem  = it.menuPrice.toInt(),
+                                qty = it.itemQuantity,
+                                notes  = it.itemNotes,
                             )
                         },
+                    total = totalPrice,
                 ),
-            ).status ?: false
+            ).status ?:false
         }
     }
 }
