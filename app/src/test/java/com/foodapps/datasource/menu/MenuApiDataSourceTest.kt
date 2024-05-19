@@ -3,8 +3,8 @@ package com.foodapps.datasource.menu
 
 import com.foodapps.data.datasource.menu.MenuApiDataSource
 import com.foodapps.data.datasource.menu.MenuDataSource
+import com.foodapps.data.network.model.CheckoutResponse
 import com.foodapps.data.network.model.checkout.CheckoutRequestPayload
-import com.foodapps.data.network.model.checkout.CheckoutResponse
 import com.foodapps.data.network.model.menus.MenuResponse
 import com.foodapps.data.network.services.FoodAppApiService
 import io.mockk.MockKAnnotations
