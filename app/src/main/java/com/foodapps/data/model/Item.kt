@@ -1,4 +1,3 @@
-// com.foodapps.model.Item.kt
 
 package com.foodapps.model
 

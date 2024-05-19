@@ -1,12 +1,20 @@
 package com.foodapps.data.model
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import com.google.firebase.auth.FirebaseUser
 
-@Entity(tableName = "users")
+
 data class User(
-    @PrimaryKey(autoGenerate = true)
-    val id: Long = 0,
+    val id: String,
     val name: String,
     val email: String,
 )
+
+fun FirebaseUser?.toUser() =
+    this?.let {
+        User(
+            id = this.uid,
+            name = this.displayName.orEmpty(),
+            email = this.email.orEmpty(),
+
+        )
+    }

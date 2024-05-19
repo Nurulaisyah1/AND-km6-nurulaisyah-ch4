@@ -5,12 +5,15 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.foodapps.data.repository.CartRepository
 import com.foodapps.data.repository.MenuRepository
+import com.foodapps.data.repository.UserRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class CheckoutViewModel(
     private val cartRepository: CartRepository,
-    private val menuRepository: MenuRepository,
+    private val userRepository: UserRepository,
+    private val menuRepository: MenuRepository
+
 ) : ViewModel() {
     val checkoutData = cartRepository.getCheckoutData().asLiveData(Dispatchers.IO)
 
@@ -23,5 +26,8 @@ class CheckoutViewModel(
         viewModelScope.launch {
             cartRepository.deleteAllCart().collect {}
         }
+    }
+    fun isLoggedIn(): Boolean {
+        return userRepository.isLoggedIn()
     }
 }

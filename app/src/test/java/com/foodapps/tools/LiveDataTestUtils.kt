@@ -1,12 +1,10 @@
-package com.foodapps.data.tools
-
+package com.foodapps.tools
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
-
 @Throws(InterruptedException::class)
 fun <T> getValue(liveData: LiveData<T>): T {
     val data = arrayOfNulls<Any>(1)

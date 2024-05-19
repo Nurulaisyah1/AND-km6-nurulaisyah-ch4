@@ -39,7 +39,14 @@ class CartViewModel(private val cartRepository: CartRepository) : ViewModel() {
             }
         }
     }
+    fun setCartNote(item: Cart) {
+        viewModelScope.launch(Dispatchers.IO) {
+            cartRepository.setCartNotes(item).collect()
+        }
+    }
 }
+
+
 
 fun isUserLoggedIn(): Boolean {
     return FirebaseAuth.getInstance().currentUser != null // Placeholder implementation

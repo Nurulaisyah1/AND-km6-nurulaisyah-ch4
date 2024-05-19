@@ -6,11 +6,11 @@ import java.util.UUID
 
 @Parcelize
 data class Menu(
-    @SerializedName("nama") var name: String,
+    @SerializedName("name") var name: String,
     @SerializedName("image_url") var imgUrl: String = "",
-    @SerializedName("harga") var price: Double,
+    @SerializedName("price") var price: Double,
     @SerializedName("detail") var detail: String,
-    @SerializedName("alamat_resto") var address: String,
+    @SerializedName("address") var address: String,
     var id: String = UUID.randomUUID().toString(),
 ) : Parcelable {
     companion object {

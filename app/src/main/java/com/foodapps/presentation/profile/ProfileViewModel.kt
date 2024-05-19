@@ -1,24 +1,38 @@
 package com.foodapps.presentation.profile
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.foodapps.data.model.Profile
+import androidx.lifecycle.asLiveData
+import com.foodapps.data.model.User
+import com.foodapps.data.repository.UserRepository
+import com.foodapps.utils.ResultWrapper
+import kotlinx.coroutines.Dispatchers
 
-class ProfileViewModel : ViewModel() {
-    val profileData =
-        MutableLiveData(
-            Profile(
-                name = "NURUL AISYAH",
-                username = "Nrlaisyh",
-                email = "nurul.aisyah@gmail.com",
-                profileImg = "https://github.com/Nurulaisyah1/Food_Asset/blob/main/img_nurulaisyah.jpg",
-            ),
-        )
-
-    val isEditMode = MutableLiveData(false)
+class ProfileViewModel(private val repository: UserRepository) : ViewModel() {
+    private val _isEnableOrDisableEdit = MutableLiveData(false)
+    val isEnableOrDisableEdit: LiveData<Boolean>
+        get() = _isEnableOrDisableEdit
 
     fun changeEditMode() {
-        val currentValue = isEditMode.value ?: false
-        isEditMode.postValue(!currentValue)
+        val currentValue = isEnableOrDisableEdit.value ?: false
+        _isEnableOrDisableEdit.postValue(!currentValue)
+    }
+
+    fun getCurrentUser(): User? {
+        return repository.getCurrentUser()
+    }
+
+    fun doChangeProfile(name: String): LiveData<ResultWrapper<Boolean>> {
+        return repository.updateProfile(name).asLiveData(Dispatchers.IO)
+    }
+
+    fun doChangePasswordByEmail(): Boolean {
+        return repository.requestChangePasswordByEmail()
+    }
+
+    fun doLogout(): Boolean {
+        return repository.doLogout()
     }
 }
+

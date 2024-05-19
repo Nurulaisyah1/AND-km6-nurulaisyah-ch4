@@ -15,7 +15,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
-import java.lang.IllegalStateException
 
 interface CartRepository {
     fun getUserCartData(): Flow<ResultWrapper<Pair<List<Cart>, Double>>>
@@ -37,6 +36,8 @@ interface CartRepository {
     fun deleteCart(item: Cart): Flow<ResultWrapper<Boolean>>
 
     fun deleteAllCart(): Flow<ResultWrapper<Boolean>>
+    fun deleteAll(): Flow<ResultWrapper<Boolean>>
+
 }
 
 class CartRepositoryImpl(private val cartDataSource: CartDataSource) : CartRepository {
@@ -137,6 +138,12 @@ class CartRepositoryImpl(private val cartDataSource: CartDataSource) : CartRepos
     }
 
     override fun deleteAllCart(): Flow<ResultWrapper<Boolean>> {
+        return proceedFlow {
+            cartDataSource.deleteAll()
+            true
+        }
+    }
+    override fun deleteAll(): Flow<ResultWrapper<Boolean>> {
         return proceedFlow {
             cartDataSource.deleteAll()
             true

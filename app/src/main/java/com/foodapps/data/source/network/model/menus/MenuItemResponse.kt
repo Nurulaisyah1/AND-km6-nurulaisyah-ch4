@@ -5,14 +5,14 @@ import com.google.gson.annotations.SerializedName
 data class MenuItemResponse(
     @SerializedName("id")
     val id: String?,
-    @SerializedName("nama")
+    @SerializedName("name")
     val name: String?,
     @SerializedName("image_url")
     val imgUrl: String?,
-    @SerializedName("harga")
+    @SerializedName("price")
     val price: Double?,
     @SerializedName("detail")
     val description: String?,
-    @SerializedName("alamat_resto")
+    @SerializedName("address")
     val address: String?,
 )
